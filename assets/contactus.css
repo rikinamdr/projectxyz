@@ -1,0 +1,98 @@
+*{
+    font-family:'poppins',sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.contact{
+    display: flex;
+    position: relative;
+    padding: 50px 100px;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    /* background-image: url(images/contact.JPG);
+    background-repeat: no-repeat;
+    background-size: 100% 100%; */
+    padding-top: 200px;
+}
+.content2 .contactinfo{
+    width: 50%;
+    flex-direction: column;
+    display:flex ;
+}
+.content2 .contactinfo .box{
+    position: relative;
+    padding: 20px 0;
+    display: flex;
+
+}
+.content2 .contactinfo .box .icon{
+    min-width: 60px;
+    height: 60px;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    font-size:30px ;
+
+}
+.content2 .contactinfo .box .text{
+    display: flex;
+    margin-left: 20px;
+    font-size: 16px;
+    color: #fff;
+    flex-direction: column;
+}
+.content{
+    color:#fff;
+    font-size: 30px;
+    font-family:'Courier New';
+}
+h3{
+    color: rgb(24, 132, 209);
+}
+.contactform{
+    padding: 20px 30px;
+    font-size: 20px;
+    color: #fff;
+    
+}
+input{
+    width: 500px;
+    height: 60px;
+    background: rgb(100, 11, 104);
+    border-bottom: 2px solid;
+    border-color: #fff;
+    color: #fff;
+    border: none;
+    outline: none;
+}
+h2{
+    color: rgb(24, 132, 209);
+    text-align: center;
+    padding: 20px;
+}
+input::placeholder {
+    color: #ffffff; 
+    text-align: center;
+}
+
+
+label{
+    color: black;
+}
+p{
+    color: black;
+}
+.contactform .inputbox .button{
+    font-size: 20px;
+    border-radius: 20px;
+    
+    text-align: center;
+}
+.inputbox .message{
+    height: 200px;
+}

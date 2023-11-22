@@ -1,0 +1,149 @@
+*{
+    padding: 0;
+    margin: 0;
+    
+    box-sizing: border-box;
+}
+body{
+    min-height: 100vh;
+}
+.header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 100px;
+    background: #fff;
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+}
+.logo{
+    font-size: 32px;
+    color: rgb(226, 43, 110);
+    text-decoration: none;
+    font-weight: 700;
+    
+}
+.navbar a{
+    position: relative;
+    font-size: 18px;
+    color: rgb(134, 8, 136);
+    font-weight: 500;
+    text-decoration: none;
+    margin-left: 20px;
+    padding-right: 20px;
+}
+.navbar a::before{
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: rgb(144, 5, 123);
+    transition: .3s;
+}
+.navbar a:hover::before{
+    width: 75%;
+}
+
+.sign_up{
+    height: 100vh;
+    
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container{
+    /* background-color: white; */
+    width: 730px;
+    height: 500x;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+h1{
+    color: #607d8b;
+    font-weight: 600;
+    font-size: 1.5em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    border-bottom: 3px solid #b5069d;
+    display: inline-block;
+    letter-spacing: 1px;
+}
+.header .logo{
+    color: #f53677;
+} 
+
+input{
+    padding: 6px;
+    margin-top: 10px;
+    margin-left: 10px;
+    width: 50%;
+    display: flex;
+    flex-direction:row;   
+    border-radius: 20px;
+    border: 1px solid #607d8b;
+} 
+input:hover{
+    background: #a9c2cf;
+}
+section .login p{
+    padding: 10px;
+}
+section .login p a{
+    color: #c4114f;
+
+}
+section .login p a:hover{
+    font-size: 20px;
+}
+
+#register{
+    text-decoration: none;
+    padding: 10px 120px;
+    border: rgb(134, 8, 136);
+    background: rgb(134, 8, 136);
+    color: white;
+    border-radius: 8px;
+    margin-top: 20px;
+    border-radius: 20px;
+}
+
+#register:hover{
+    background: transparent;
+    color: black;
+    border: 1px solid black;
+    transition: .5s;
+}
+/* .sign_up{
+    display: block;
+    color: black;
+    position: absolute;
+    top: 81%;
+} */
+.login p span a{
+    color: black;
+    margin-left: 6px;
+}
+.container .name{
+    display: flex;
+}
+.error{
+    color: #ff0000; /* Red color for error text */
+    font-size: 14px;
+    margin-top: 5px;
+}
+.success{
+    color: #009dff; /* Red color for error text */
+    font-size: 14px;
+    margin-top: 5px;
+}
