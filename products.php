@@ -141,7 +141,7 @@ if ($success) {
 ?>
 <div>
     <div class="main-title">
-        <p class="font-weight-bold">Product</p>
+        <p class="font-weight-bold" style="margin-top: 0px;">Product</p>
         <button style="text-align: right; height:40px; margin-bottom:0px" onclick="showAddProductForm()">Add Product
         </button>
     </div>
