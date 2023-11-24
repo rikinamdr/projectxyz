@@ -7,7 +7,7 @@ session_start();
 // Check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
     // Redirect to the login page if not logged in
-    header("Location: login.php");
+    header("Location: index.php");
     exit();
 }
 
@@ -112,7 +112,6 @@ $activeTab = isset($_GET['tab']) ? $_GET['tab'] : 'dashboards';
                 echo 'File not found for tab: ' . $activeTab;
             }
             ?>
-
 
             <script src="assets/admin.js"></script>
 

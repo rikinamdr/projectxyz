@@ -140,7 +140,7 @@ if ($success) {
 <div>
     <div class="main-title">
         <p class="font-weight-bold">Customers</p>
-        <button style="text-align: right; height:40px; margin-bottom:0px" onclick="showAddProductForm()">Add Product</button>
+<!--        <button style="text-align: right; height:40px; margin-bottom:0px" onclick="showAddProductForm()">Add Product</button>-->
     </div>
     <div class="cards" id="productList">
         <table>

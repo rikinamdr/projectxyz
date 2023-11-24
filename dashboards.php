@@ -42,7 +42,7 @@
     <div class="main-title">
         <p class="font-weight-bold">PRODUCTS</p>
 
-        <p class="font-weight-bold tablinks" onclick="openCity(event, 'addProductPage')">Add product</a>
+        <p class="font-weight-bold tablinks" onclick="openCity(event, 'addProductPage')">Add product</p>
     </div>
     <div class="main-cards">
 
@@ -78,3 +78,4 @@
         <button type="submit">Add Product</button>
 
     </form>
+</div>

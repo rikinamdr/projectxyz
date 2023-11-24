@@ -27,7 +27,6 @@ function getProducts()
             $products[] = $row;
         }
     }
-
     return $products;
 }
 
@@ -44,13 +43,10 @@ function addUpdateProduct($post)
     if (isset($_FILES['productImage']) && !empty($_FILES['productImage'])) {
         $uploadDirectory = 'images/products/'; // Specify the directory where you want to save the product images
         if ($_FILES['productImage']['name']) {
-
-
             // Get the details of the uploaded file
             $fileName = basename($_FILES['productImage']['name']);
             $targetPath = $uploadDirectory . $fileName;
             $fileType = pathinfo($targetPath, PATHINFO_EXTENSION);
-
             // Check if the file is an image
             $isImage = getimagesize($_FILES['productImage']['tmp_name']);
             if ($isImage !== false) {
@@ -81,14 +77,9 @@ function addUpdateProduct($post)
 
     $result = mysqli_query($conn, $sql);
 
-    if ($result) {
-        unset($post);
-        unset($_POST);
-        $success = "Product saved successfully.";
-    } else {
-        $error = "Something went wrong.Please try again.";
-    }
+
     return $result;
+
 }
 
 function getProduct($id)
@@ -108,15 +99,31 @@ function getProduct($id)
 // Function to read products from the file
 // Handle form submissions
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $response = '';
     if (isset($_POST['add'])) {
-        addUpdateProduct($_POST);
+        $response = addUpdateProduct($_POST);
     } elseif (isset($_POST['update'])) {
-        addUpdateProduct($_POST);
+        $response = addUpdateProduct($_POST);
     } elseif (isset($_POST['delete'])) {
         $id = $_POST['delete'];
         deleteProduct($id);
     }
-    $_POST=[];
+    unset($_POST);
+    $_POST = [];
+    if ($response) {
+
+        if ($_POST['productId'] && ($_POST['productId'] > 0)) {
+            $success = "Product updated successfully.";
+
+        } else {
+            $success = "Product saved successfully.";
+        }
+    } else {
+        $error = "Something went wrong.Please try again.";
+
+    }
+
+
 }
 $products = getProducts();
 ?>
@@ -127,14 +134,28 @@ $products = getProducts();
 if ($error) {
     ?>
     <div class="error">
-        <?php echo $error; ?>
+        <div class="alert alert-error mt-3" role="alert" style="position: relative;">
+            <span style="margin-right: 10px;"><?php echo $error; ?></span>
+            <button type="button" class="close" aria-label="Close" onclick="closeSuccessMessage(this)">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+
     </div>
     <?php
 }
 if ($success) {
+
     ?>
     <div class="success">
-        <?php echo $success ?>
+
+        <div class="alert alert-success mt-3" role="alert" style="position: relative;">
+            <span style="margin-right: 10px;"><?php echo $success; ?></span>
+            <button type="button" class="close" aria-label="Close" onclick="closeSuccessMessage(this)">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+
     </div>
     <?php
 }
@@ -288,14 +309,18 @@ if ($success) {
         outline: none;
         border-color: #2196F3; /* Add your preferred focus color */
     }
+
     mt-3, .my-3 {
-        margin-top: 1rem!important;
+        margin-top: 1rem !important;
     }
+
     alert-success {
         color: #155724;
-        background-color: #d4edda;!important;
+        background-color: #d4edda;
+    !important;
         border-color: #c3e6cb;
     }
+
     .alert {
         position: relative;
         padding: 0.75rem 1.25rem;
@@ -311,6 +336,7 @@ if ($success) {
         document.getElementById("productList").style.display = "none";
         document.getElementById("addEditProductForm").style.display = "block";
         document.getElementById("productId").value = ""; // Clear any previous product ID
+        document.getElementById("submit").value = "add"; // Clear any previous product ID
     }
 
     function fillFormWithData(data) {
@@ -350,11 +376,11 @@ if ($success) {
             fetch('Controller/delete_product_data.php?id=' + productId)
                 .then(response => response.json())
                 .then(data => {
-                // Handle the success case with the parsed JSON data
+                    // Handle the success case with the parsed JSON data
 
-                var container = document.getElementById('message');
-                // container.innerHTML += 'Product Deleted sucessfully';
-                    document.getElementById("table-"+productId).remove();
+                    var container = document.getElementById('message');
+                    // container.innerHTML += 'Product Deleted sucessfully';
+                    document.getElementById("table-" + productId).remove();
                     const successMessageDiv = document.createElement('div');
                     successMessageDiv.classList.add('alert', 'alert-success', 'mt-3');
                     successMessageDiv.role = 'alert';
@@ -370,10 +396,11 @@ if ($success) {
 
                     // Append the success message div to the body or another container element
                     container.appendChild(successMessageDiv);
-            })
+                })
                 .catch(error => console.error('Error fetching product data:', error));
         }
     }
+
     function closeSuccessMessage(button) {
         const successMessageDiv = button.closest('.alert-success');
         if (successMessageDiv) {
