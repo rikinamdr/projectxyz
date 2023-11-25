@@ -260,36 +260,42 @@ $users = getUsers();
             .then(response => response.json())
             .then(data => {
                 // Handle the success case with the parsed JSON data
+                // Handle the success case with the parsed JSON data
                 var alerttext = data.success ? "success" : "error";
                 var container = document.getElementById('message');
                 const successMessageDiv = document.createElement('div');
+
+                // Add classes and attributes to the created div
                 successMessageDiv.classList.add('alert', 'alert-' + alerttext, 'mt-3');
                 successMessageDiv.role = 'alert';
                 successMessageDiv.style.position = 'relative';
 
                 // Add the success message and close button with inline styles
                 successMessageDiv.innerHTML = `
-            <span style="margin-right: 10px;">${data.message}</span>
-            <button type="button" class='close' aria-label="Close" onclick="closeSuccessMessage(this)">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        `;
+        <span style="margin-right: 10px;">${data.message}</span>
+        <button type="button" class='close' aria-label="Close" onclick="closeSuccessMessage(this)">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    `;
+
+                // Clear any previous messages in the container
                 if (container && container.innerHTML.trim() !== '') {
                     container.innerHTML = '';
                 }
+
+                // Append the new success message div to the container
                 container.appendChild(successMessageDiv);
+
+                // Set a timeout to remove the message after 5000 milliseconds (5 seconds)
                 setTimeout(function () {
                     container.innerHTML = '';
+
+                    // Reload the page if the operation was successful
                     if (data.success == true) {
                         location.reload();
                     }
                 }, 5000);
-                if (data.success == true) {
 
-                    document.getElementById("userList").style.display = "block";
-                    document.getElementById("addEditUserForm").style.display = "none";
-                    document.getElementById("userId").value = ""; // Clear any previous user ID
-                }
 
                 // Append the success message div to the body or another container element
 
