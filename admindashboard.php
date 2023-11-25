@@ -7,7 +7,7 @@ session_start();
 // Check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
     // Redirect to the login page if not logged in
-    header("Location: login.php");
+    header("Location: index.php");
     exit();
 }
 
@@ -63,12 +63,13 @@ $activeTab = isset($_GET['tab']) ? $_GET['tab'] : 'dashboards';
             <ul class="sidebar-list tab">
                 <li class="sidebar-list-item tablinks <?php echo ($activeTab == 'dashboards') ? 'active' : ''; ?>"><a class="text-primary" href="?tab=dashboards" ><span
                             class="material-icons-outlined ">dashboard</span> Dashboard</a></li>
+                <li class="sidebar-list-item tablinks <?php echo ($activeTab == 'categories') ? 'active' : ''; ?>"><a class="text-primary" href="?tab=categories"><span
+                                class="material-icons-outlined">add_shopping_cart</span> Category</a></li>
                 <li class="sidebar-list-item tablinks <?php echo ($activeTab == 'products') ? 'active' : ''; ?>"><a class="text-primary" href="?tab=products" ><span
                             class="material-icons-outlined">inventory_2</span> Products</a></li>
                 <li class="sidebar-list-item tablinks <?php echo ($activeTab == 'customers') ? 'active' : ''; ?>"><a class="text-primary" href="?tab=customers"><span
                             class="material-icons-outlined">add_shopping_cart</span> Customer</a></li>
-                <li class="sidebar-list-item tablinks <?php echo ($activeTab == 'categories') ? 'active' : ''; ?>"><a class="text-primary" href="?tab=categories"><span
-                            class="material-icons-outlined">add_shopping_cart</span> Category</a></li>
+
                 <li class="sidebar-list-item tablinks <?php echo ($activeTab == 'admins') ? 'active' : ''; ?>"><a class="text-primary" href="?tab=admins"><span
                             class="material-icons-outlined">add_shopping_cart</span> Admins</a></li>
                     
@@ -111,7 +112,6 @@ $activeTab = isset($_GET['tab']) ? $_GET['tab'] : 'dashboards';
                 echo 'File not found for tab: ' . $activeTab;
             }
             ?>
-
 
             <script src="assets/admin.js"></script>
 
