@@ -4,7 +4,7 @@
    <meta charset="utf-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>payment</title>
-   <link href="payment.css" rel="stylesheet">
+   <link href="assets/payment.css" rel="stylesheet">
    <link href="assets/header.css" rel="stylesheet">
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
@@ -26,14 +26,6 @@
                 <div class="input-box">
                     <input type="text" placeholder="Email Address" required class="name">
                     <i class="bi bi-envelope-at-fill icon"></i>
-                </div>
-            </div>
-            <div class="input-content">
-                <div class="input-box">
-                    <h4> Date of payment</h4>
-                    <input type="text" placeholder="DD" class="dop">
-                    <input type="text" placeholder="MM" class="dop">
-                    <input type="text" placeholder="YYYY" class="dop">
                 </div>
             </div>
 
