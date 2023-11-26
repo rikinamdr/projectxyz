@@ -27,7 +27,6 @@ $products = getProducts();
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/shop.css">
-    <!--    <link rel="stylesheet" href="assets/payment.css">-->
     <link rel="stylesheet" href="assets/cart.css">
     <link rel="stylesheet" href="assets/header.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
@@ -55,8 +54,7 @@ $products = getProducts();
             <i class="fas fa-shopping-cart total-count"></i>
         </button>
 
-        <!-- <a href="cart.php" > <img src="images/cart-icon.png"  ></a>
-        <span class="quantity">0</span> -->
+        
     </div>
 
 </header>
@@ -79,7 +77,7 @@ $products = getProducts();
                     <h4>Rs.<?php echo $product['price']; ?></h4>
 
                 </div>
-                <!-- <button onclick="addToCart(1)">Add to Cart</button> -->
+               
                 <button type="button" data-name="<?php echo $product['name']; ?>"
                         data-id="<?php echo $product['id']; ?>"
                         data-image="images/products/<?php echo $product['image']; ?>"
@@ -107,10 +105,10 @@ $products = getProducts();
                     <div class="col-lg-12 "id="message"></div>
                 </div>
                 <div class="row">
-                    <!-- Left Column -->
+                    
                     <div class="col-lg-5">
                         <div class="left-content">
-                            <!-- Content for the left column goes here -->
+                            
                             <h5 class="modal-title" id="paymentCartDetailsModalLabel">Shipping details</h5>
                             <form id="accountOptionsForm">
 
@@ -130,7 +128,7 @@ $products = getProducts();
                                 </div>
                             </form>
                             <div id="existingAccountForm" style="display:block;">
-                                <!-- Form for existing account with only email field -->
+                                
                                 <form id="form1">
                                     <div class="form-group">
                                         <div class="input-box">
@@ -150,7 +148,7 @@ $products = getProducts();
                             </div>
 
                             <div id="newAccountForm" style="display:none;">
-                                <!-- Form for creating a new account with user details -->
+                                
                                 <form method="POST" class="container" id="form2">
                                     <h5>Account</h5>
                                     <div class="form-group">
@@ -245,10 +243,10 @@ $products = getProducts();
                         </div>
                     </div>
 
-                    <!-- Right Column -->
+                    
                     <div class="col-lg-7">
                         <div class="right-content">
-                            <!-- Content for the right column goes here -->
+                           
                             <h5 class="modal-title" id="paymentCartDetailsModalLabel">Cart Details</h5>
                             <p></p>
                             <table class="table">
@@ -276,8 +274,7 @@ $products = getProducts();
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <!--                  <a href="payment.php" class="btn btn-secondary">Checkout</a>-->
-                <!-- <button type="button" class="btn btn-danger clear-all">Clear All</button> -->
+                
             </div>
         </div>
     </div>
@@ -289,25 +286,7 @@ $products = getProducts();
 <script src="script.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
-<script>
-    // JavaScript to toggle the visibility of forms based on radio button selection
-    document.querySelectorAll('input[name="accountOption"]').forEach(function (radio) {
-        radio.addEventListener('change', function () {
-            var selectedOption = document.querySelector('input[name="accountOption"]:checked').value;
 
-            // Hide both forms initially
-            document.getElementById('existingAccountForm').style.display = 'none';
-            document.getElementById('newAccountForm').style.display = 'none';
-
-            // Show the selected form
-            if (selectedOption === 'existing') {
-                document.getElementById('existingAccountForm').style.display = 'block';
-            } else if (selectedOption === 'new') {
-                document.getElementById('newAccountForm').style.display = 'block';
-            }
-        });
-    });
-</script>
 </body>
 </html>
 

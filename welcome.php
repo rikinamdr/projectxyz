@@ -1,100 +1,105 @@
-<?php
-function getProducts()
-{
-    global $conn;
-    require('dbconnect.php');
-    $sql = "SELECT * FROM products";
-    $result = $conn->query($sql);
-
-    $products = [];
-
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            $products[] = $row;
-        }
-    }
-    return $products;
-}
-$products = getProducts();
-?>
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>home page</title>
-    <link rel="stylesheet" href="assets/welcome.css">
-    <link rel="stylesheet" href="assets/header.css">
-</head>
-<body>
-    <header class="header">
-        <a href="#" class="logo">XYZshoe</a>
-    
-        <nav class="navbar">
-            <a href="welcome.php">HOME</a>
-            <a href="index.php">LOG IN</a>
-            <a href="shop.php">SHOP</a>
-            <a href="contactus.php">CONTACT</a>
-            <a href="aboutus.php">ABOUT US</a>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>home page</title>
+        <link rel="stylesheet" href="assets/newhome.css">
+        <link rel="stylesheet" href="assets/header.css">
+    </head>
 
-        
-        </nav>
-        <div class="cart-icons">
-                  <a href="cart.php" > <img src="images/cart-icon.png"  ></a> 
-                  <span class="quantity">0</span>
-            </div>
-        
-    </header>
-    <div class="img">
-        
-        <div class="img1"><img src="tag.png" height="250px" width="600px" ></div>
-        <?php foreach ($products as $key => $product):  ?>
-        <div class="img2">
-            <?php if (!empty($product['image']) && $key==0): ?>
-                    <img  height="250px" width="350px" src="data:image/jpeg;base64,<?php echo $product['image']; ?>" alt="<?php echo $product['name']; ?>">
-                <?php endif; ?>
-           </div>
-        <?php endforeach; ?>
-    </div>
-    <div class="product">
-        <?php foreach ($products as $key => $product): ?>
-        <div class="product<?php echo $key+1;?>">
-            <?php if (!empty($product['image']) && $key > 0): ?>
-                    <img height="150px" width="150px" src="data:image/jpeg;base64,<?php echo $product['image']; ?>" alt="Product Image">
-                <?php endif; ?>
+    <body>
+    <?/*php include ('header.php'*/ ?>
+        <header class="header">
+            <a href="#" class="logo">XYZshoe</a>
+
+            <nav class="navbar">
+                <a href="welcome.php">HOME</a>
+                <a href="index.php">LOG IN</a>
+                <a href="shop.php">SHOP</a>
+                <a href="contactus.php">CONTACT</a>
+                <a href="aboutus.php">ABOUT US</a>
+            </nav>
             
-            <p><?php echo $product['name'];?></p>
-            <p><?php echo $product['price'];?></p>
-            <p><?php echo $product['description'];?></p>
-            <a href="">Add to cart</a>
+
+        </header>
+        <div class="top">
+            <div class="content">
+                <h1>Step into style, Stride with confidence</h1>
+                <h3> Your Sole Destination for Trendsetting Footwear!</h3>
+                <button>Explore</button>
+            </div>
         </div>
-            <?php if (!empty($product['image']) && $key==0): ?>
-                    <img height="250px" width="350px" src="data:image/jpeg;base64,<?php echo $product['image']; ?>" alt="Product Image">
-                <?php endif; ?>
-           </div>
-        <?php endforeach; ?>
+        <div class="category">
+            <div class="title">
+                <h1>Category</h1>
+            </div>
+            <div class="product">
+                <div class="card">
+                    <img src="images/m6.jpg" alt="">
+                    <p>Fancy</p>
+                    
+                </div>
+                <div class="card">
+                    <img src="images/s1.png" alt="">
+                    <p>Casual</p>
+                    
+                </div>
+                <div class="card">
+                    <img src="images/m4.jpg" alt="">
+                    <p>Formal</p>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="popular">
+            <div class="title">
+                <h1>Popular</h1>
+            </div>
+            <div class="product1">
+                <div class="card">
+                    <img src="images/m2.jpg" alt="">
+                    <p>Name</p>
+                    
+                </div>
+                <div class="card">
+                    <img src="images/m5.jpg" alt="">
+                    <p>Name</p>
+                    
+                </div>
+                <div class="card">
+                    <img src="images/m7.jpg" alt="">
+                    <p>Name</p>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="new">
+            <div class="title">
+                <h1>New Products</h1>
+            </div>
+            <div class="product2">
+                <div class="card">
+                    <img src="images/m8.jpg" alt="">
+                    <p>Name</p>
+                    
+                </div>
+                <div class="card">
+                    <img src="images/s2.png" alt="">
+                    <p>Name</p>
+                    
+                </div>
+                <div class="card">
+                    <img src="images/m10.jpg" alt="">
+                    <p>Name</p>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="foot">
+            <?php include ('footer.php') ?>
+        </div>
         
-        <div class="product2">
-            <img src="shoe1.JPG" height="150px" width="150px">
-            <p>Name</p>
-            <p>Price</p>
-            <p>description</p>
-            <a href="">Add to cart</a>
-        </div>
-        <div class="product3">
-            <img src="shoe1.JPG" height="150px" width="150px">
-            <p>Name</p>
-            <p>Price</p>
-            <p>description</p>
-            <a href="">Add to cart</a>
-        </div>
-        <div class="product4">
-            <img src="shoe1.JPG" height="150px" width="150px">
-            <p>Name</p>
-            <p>Price</p>
-            <p>description</p>
-            <a href="">Add to cart</a>
-        </div>
-    </div>
-</body>
+    </body>
+
 </html>

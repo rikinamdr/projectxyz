@@ -5,7 +5,7 @@
     <div class="main-cards">
         <div class="card">
             <div class="card-inner">
-                <a class="text-primary" href="products.php">PRODUCTS</a>
+                <a class="text-primary" href="admindashboard.php?tab=products">PRODUCTS</a>
                 <span class="material-icons-outlined text-blue">inventory_2</span>
             </div>
             <span class="text-primary font-weight-bold">249</span>
@@ -13,7 +13,7 @@
 
         <div class="card">
             <div class="card-inner">
-                <a class="text-primary" href="purchaseOrder.php">SALES ORDERS</a>
+                <a class="text-primary" href="admindashboard.php?tab=purchaseOrder">PURCHASE ORDER</a>
                 <span class="material-icons-outlined text-orange">add_shopping_cart</span>
             </div>
             <span class="text-primary font-weight-bold">83</span>
@@ -21,34 +21,20 @@
 
         <div class="card">
             <div class="card-inner">
-                <a class="text-primary" href="categories.php">CATEGORY</a>
+                <a class="text-primary" href="admindashboard.php?tab=categories">CATEGORY</a>
                 <span class="material-icons-outlined text-orange">add_shopping_cart</span>
             </div>
             <span class="text-primary font-weight-bold">83</span>
         </div>
         <div class="card">
             <div class="card-inner">
-                <a class="text-primary" href="customers.php">CUSTOMERS</a>
+                <a class="text-primary" href="admindashboard.php?tab=customers">CUSTOMERS</a>
                 <span class="material-icons-outlined text-orange">add_shopping_cart</span>
             </div>
             <span class="text-primary font-weight-bold">83</span>
         </div>
 
-        <!-- <div class="card">
-            <div class="card-inner">
-                <p class="text-primary">c</p>
-                <span class="material-icons-outlined text-green">shopping_cart</span>
-            </div>
-            <span class="text-primary font-weight-bold">79</span>
-        </div> -->
-
-        <!-- <div class="card">
-            <div class="card-inner">
-                <p class="text-primary">NOTIFICATIONS</p>
-                <span class="material-icons-outlined text-red">notification_important</span>
-            </div>
-            <span class="text-primary font-weight-bold">56</span>
-        </div> -->
+        
     </div>
 </div>
 

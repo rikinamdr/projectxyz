@@ -17,8 +17,7 @@ if($_POST){
 
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-        // SQL query to insert data into the users table
-        $query = "INSERT INTO customers (f_name, l_name,  email, password, address, phone) VALUES ('$fname','$lname', '$email', '$hashedPassword', '$address', '$ph_no')";    
+        $query = "INSERT INTO users (f_name, l_name,  email, password, address, phone) VALUES ('$fname','$lname', '$email', '$hashedPassword', '$address', '$ph_no')";    
         $result = mysqli_query($conn, $query);
         if ($result) {
             $success=  "User data inserted successfully.";
@@ -88,7 +87,7 @@ if($_POST){
                 <input type="password" placeholder="Password" name="password" required>
                 <input type="password" placeholder="Confirm-Password" name="confirm-password" required>
                 <input type="submit" id="register" placeholder="submit">
-                <!-- <a href="signup.php" id="register">SIGN UP</a> -->
+                
         
                 <div class="login">
                     <p>Already have an account? <a href="index.php">LOG IN</a> </p>

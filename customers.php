@@ -6,7 +6,7 @@ function getCustomers()
 {
     global $conn;
     require('dbconnect.php');
-    $sql = "SELECT * FROM customers";
+    $sql = "SELECT * FROM customers order by id desc";
     $result = $conn->query($sql);
 
     $customers = [];

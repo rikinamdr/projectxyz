@@ -1,6 +1,6 @@
 <?php
 global $conn;
-require('dbconnect.php');
+require('../dbconnect.php');
 
 $success = false;
 

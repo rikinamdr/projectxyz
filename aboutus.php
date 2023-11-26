@@ -21,10 +21,7 @@
             <a href="aboutus.php">ABOUT US</a>
 
         </nav>
-        <div class="cart-icons">
-            <a href="cart.php" > <img src="images/cart-icon.png" height="50px" width="50px" ></a> 
-            <span class="quantity">0</span>
-  </div>
+       
 
     </header>
     <section style="margin-top: 100px;margin-bottom: 20px;">
