@@ -7,7 +7,7 @@ require('../dbconnect.php');
 
 $categoryId = isset($_GET['id']) ? $_GET['id'] : null;
 
-$sql = "SELECT * FROM categorys WHERE id = $categoryId";
+$sql = "SELECT * FROM category WHERE id = $categoryId";
 $result = mysqli_query($conn, $sql);
 $categorys = [];
 //return ($result->num_rows > 0) ? $result->fetch_assoc() : null;

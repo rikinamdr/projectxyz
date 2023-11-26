@@ -6,7 +6,7 @@ function getCategory()
 {
     global $conn;
     require('dbconnect.php');
-    $sql = "SELECT * FROM category";
+    $sql = "SELECT * FROM category order by id DESC ";
     $result = $conn->query($sql);
 
     $category = [];
@@ -22,27 +22,36 @@ function getCategory()
 
 function addCategory($post)
 {
-    
-    $name = $post['categoryName'];
+    $f_name = $post['f_name'];
+    $l_name = $post['l_name'];
+    $email = $post['email'];
+    $confirmpassword = $post['confirmPassword'];
 
-    $description = $post['categoryDescription'];
-    
-    require('dbconnect.php');
-    $sql = "INSERT INTO category (name, description)
-     VALUES ('$name', '$description')";
-   
-    $result = mysqli_query($conn, $sql);
-    
-    if ($result) {
-        unset($_POST);
-        $success = "Category saved successfully.";
-    }else{
-        $error = "Something went wrong.Please try again.";
+    $password = $post['password'];
+    if ($password == $confirmpassword) {
+        $error = 'Password and Confirm password does not match';
+    } else {
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+        require('dbconnect.php');
+        $sql = "INSERT INTO category (f_name, l_name, email, password)
+         VALUES ('$f_name', '$l_name', '$email', '$hashedPassword')";
+
+        $result = mysqli_query($conn, $sql);
+
+        if ($result) {
+            unset($_POST);
+            $success = "Category saved successfully.";
+        } else {
+            $error = "Something went wrong.Please try again.";
+        }
+        return $result;
+
     }
-    return $result;
+
 }
 
-function getCategoryById($id)
+function getOneCategory($id)
 {
     global $conn;
     require('dbconnect.php');
@@ -67,7 +76,9 @@ function deleteCategory($id)
     require('dbconnect.php');
     $sql = "DELETE FROM category WHERE id=$id";
     return mysqli_query($conn, $sql);
+
 }
+
 ?>
 
 <?php
@@ -77,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['add'])) {
         addCategory($_POST);
     } elseif (isset($_POST['update'])) {
-       
+
         updateCategory($_POST);
     } elseif (isset($_POST['delete'])) {
         $id = $_POST['delete'];
@@ -86,58 +97,64 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 $category = getCategory();
 ?>
-<?php
-if ($error) {
-    ?>
-    <div class="error">
-        <?php echo $error; ?>
-    </div>
+<div id="message">
     <?php
-}
-if ($success) {
+    if ($error) {
+        ?>
+        <div class="error">
+            <?php echo $error; ?>
+        </div>
+        <?php
+    }
+    if ($success) {
+        ?>
+        <div class="success">
+            <?php echo $success ?>
+        </div>
+        <?php
+    }
     ?>
-    <div class="success">
-        <?php echo $success ?>
-    </div>
-    <?php
-}
-?>
+</div>
 <div>
     <div class="main-title">
         <p class="font-weight-bold">Category</p>
-        <button style="text-align: right; height:40px; margin-bottom:0px" onclick="showAddCategoryForm()">Add Category</button>
+        <button style="text-align: right; height:40px; margin-bottom:0px" id="addCategory" onclick="showAddCategoryForm()">Add
+            Category
+        </button>
     </div>
     <div class="cards" id="categoryList">
         <table>
             <thead>
-                <tr>
-                    <th>S.N</th>
-                    <th>Category Name</th>
-                    <th>Category Description</th>
-                    <th>Action</th>
-                </tr>
+            <tr>
+                <th>S.N</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Action</th>
+            </tr>
             </thead>
             <tbody>
-                <!-- Sample data, replace with your actual category data -->
-                <?php foreach ($category as $key => $categories): ?>
-                    <tr>
-                        <td>
-                            <?php echo $key + 1; ?>
-                        </td>
-                        
-                        <td>
-                            <?php echo $categories['name']; ?>
-                        </td>
-                        
-                        <td>
-                            <?php echo $categories['description']; ?>
-                        </td>
-                        <td class="action-buttons">
-                                <button onclick="deleteCategory(<?php echo $categories['id']; ?>)">Delete</button>
-                            <button onclick="showEditCategoryForm(<?php echo $categories['id']; ?>)">Edit</button>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
+            <!-- Sample data, replace with your actual category data -->
+            <?php foreach ($category as $key => $categories): ?>
+                <tr id="table-<?php echo $categories['id'];?>">
+                    <td>
+                        <?php echo $key + 1; ?>
+                    </td>
+
+                    <td>
+                        <?php echo $categories['name']; ?>
+                    </td>
+                    <td>
+                        <?php echo $categories['description']; ?>
+                    </td>
+                    <!-- <td>
+                        <?/*php echo $categories['email'];*/ ?>
+                    </td> -->
+                    <td class="action-buttons">
+                        <button onclick="deleteCategory(<?php echo $categories['id']; ?>)">Delete</button>
+                        <button onclick="showEditCategoryForm(<?php echo $categories['id']; ?>)">Edit</button>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
             </tbody>
         </table>
     </div>
@@ -145,17 +162,24 @@ if ($success) {
 
 </div>
 <div id="addEditCategoryForm">
-    <form action="admindashboard.php?tab=categories" method="post" id="categoryForm" enctype="multipart/form-data">
-        <label for="categoryName">Category Name:</label>
-        <input type="text" id="categoryName" name="categoryName" required>
+    <form id="categoryForm" enctype="multipart/form-data">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
 
-        <label for="categoryDescription">Category Description:</label>
-        <textarea id="categoryDescription" name="categoryDescription" rows="4" required></textarea>
+        <label for="description">Description:</label>
+        <input type="text" id="description" name="description" rows="4" required>
 
-       
+        <!-- <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+
+        <label for="confirmPassword">Conirm Password:</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" required> -->
 
         <input type="hidden" id="categoryId" name="categoryId">
-        <button type="submit" name="add">Save Category</button>
+        <button type="button" onclick="submitForm()" name="add">Save Category</button>
         <button type="button" onclick="cancelAddEdit()">Cancel</button>
 
     </form>
@@ -204,98 +228,176 @@ if ($success) {
         /* Hide the category add/edit form by default */
         margin-top: 20px;
     }
+
     select {
-       width: 100%;
-      padding: 10px;
-      font-size: 14px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      cursor: pointer;
-      margin-bottom: 20px;
+        width: 100%;
+        padding: 10px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-bottom: 20px;
     }
 
     /* Style for better visual presentation */
     select:hover {
-      border-color: #555;
+        border-color: #555;
     }
 
     select:focus {
-      outline: none;
-      border-color: #2196F3; /* Add your preferred focus color */
+        outline: none;
+        border-color: #2196F3; /* Add your preferred focus color */
     }
 </style>
 <script>
+    function submitForm() {
+        var formData = new FormData(document.getElementById('categoryForm'));
+        fetch("Controller/add_edit_category_data.php", {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                // Handle the success case with the parsed JSON data
+                var alerttext = data.success ? "success" : "error";
+                var container = document.getElementById('message');
+                const successMessageDiv = document.createElement('div');
+                successMessageDiv.classList.add('alert', 'alert-' + alerttext, 'mt-3');
+                successMessageDiv.role = 'alert';
+                successMessageDiv.style.position = 'relative';
+
+                // Add the success message and close button with inline styles
+                successMessageDiv.innerHTML = `
+            <span style="margin-right: 10px;">${data.message}</span>
+            <button type="button" class='close' aria-label="Close" onclick="closeSuccessMessage(this)">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        `;
+                if (container && container.innerHTML.trim() !== '') {
+                    container.innerHTML = '';
+                }
+                container.appendChild(successMessageDiv);
+                setTimeout(function () {
+                    container.innerHTML = '';
+                    if (data.success == true) {
+                        location.reload();
+                    }
+                }, 5000);
+                if (data.success == true) {
+
+                    document.getElementById("categoryList").style.display = "block";
+                    document.getElementById("addEditCategoryForm").style.display = "none";
+                    document.getElementById("categoryId").value = ""; // Clear any previous category ID
+                }
+
+                // Append the success message div to the body or another container element
+
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            })
+    }
+
     function showAddCategoryForm() {
+        document.getElementById('categoryForm').reset();
         document.getElementById("categoryList").style.display = "none";
         document.getElementById("addEditCategoryForm").style.display = "block";
         document.getElementById("categoryId").value = ""; // Clear any previous category ID
+        document.getElementById('password').style.display = 'block';
+        document.getElementById('confirmPassword').style.display = 'block';
+        document.getElementById('password').previousElementSibling.style.display = 'block';
+        document.getElementById('confirmPassword').previousElementSibling.style.display = 'block';
+
     }
+
     function fillFormWithData(data) {
         document.getElementById("categoryList").style.display = "none";
         document.getElementById("addEditCategoryForm").style.display = "block";
-        document.getElementById("categoryId").value = categoryId; // Set the category ID for editing
-        document.getElementById("categoryName").value = categoryData.name;
-        document.getElementById("categoryPrice").value = categoryData.price;
-        document.getElementById("categoryQuantity").value = categoryData.quantity;
-        document.getElementById("categoryImage").value = categoryData.image;
+
+        document.getElementById("categoryId").value = data.id; // Set the category ID for editing
+        document.getElementById("name").value = data.name; // Set the category ID for editing
+        document.getElementById("description").value = data.description; // Set the category ID for editing
+        document.getElementById("email").value = data.email;
+        document.getElementById("email").value = data.email;
+        var readOnlyPassword = document.getElementById('password');
+        var readOnlyConfirmPassword = document.getElementById('confirmPassword');
+
+        // Hide the elements
+        if (readOnlyPassword && readOnlyConfirmPassword) {
+            readOnlyPassword.style.display = 'none';
+            var passwordlabel = readOnlyPassword.previousElementSibling;
+            if (passwordlabel) {
+                passwordlabel.style.display = 'none';
+            }
+            readOnlyConfirmPassword.style.display = 'none';
+            var confirmPasswordLabel = readOnlyConfirmPassword.previousElementSibling;
+            if (confirmPasswordLabel) {
+                confirmPasswordLabel.style.display = 'none';
+            }
+        }
+        // document.getElementById("password").readOnly = true;
+        // document.getElementById("confirmPassword").readOnly = true;
+        // document.getElementById("categoryImage").value = data.image;
+        document.getElementById('submit').name = "update";
+        // alert(data.image);
+        // var src = "images/category/" + data.image;
+
+        // var container = document.getElementById('appendedImageContainer');
+        // container.innerHTML += '<img style="height:100px; widht:150px;" src="' + src + '" alt="' + data.name + '">';
     }
 
     function showEditCategoryForm(categoryId) {
-        alert("i am editing category of id :"+categoryId);
-        //$categoryData = getCategory(categoryId);
-        // document.getElementById("categoryId").value = categoryId; // Set the category ID for editing
-        // document.getElementById("categoryName").value = categoryData.name;
-        // document.getElementById("categoryPrice").value = categoryData.price;
-        // document.getElementById("categoryQuantity").value = categoryData.quantity;
-        // document.getElementById("categoryImage").value = categoryData.image;
-        fetch('Controller/get_category_data.php')
-      .then(response => response.json())
-      .then(data => fillFormWithData(data))
-      .catch(error => console.error('Error fetching category data:', error));
-    
+
+        fetch('Controller/get_category_data.php?id=' + categoryId)
+            .then(response => response.json())
+            .then(data => fillFormWithData(data))
+            .catch(error => console.error('Error fetching category data:', error));
     }
 
     function cancelAddEdit() {
         document.getElementById("categoryList").style.display = "block";
         document.getElementById("addEditCategoryForm").style.display = "none";
     }
+
     function deleteCategory(categoryId) {
         if (confirm('Are you sure you want to delete this category?')) {
-            // Perform the delete action using AJAX or other appropriate method
-            // Example: Redirect to a delete script with the category ID
-            // window.location.href = 'delete_category.php?id=' + categoryId;
             fetch('Controller/delete_category_data.php?id=' + categoryId)
                 .then(response => response.json())
                 .then(data => {
-                // Handle the success case with the parsed JSON data
-
-                var container = document.getElementById('message');
-                // container.innerHTML += 'Category Deleted sucessfully';
-                    document.getElementById("table-"+categoryId).remove();
+                    console.log(data);
+                    // Handle the success case with the parsed JSON data
+                    var alerttext = data.success ? "success" : "error";
+                    var container = document.getElementById('message');
                     const successMessageDiv = document.createElement('div');
-                    successMessageDiv.classList.add('alert', 'alert-success', 'mt-3');
+                    successMessageDiv.classList.add('alert', 'alert-' + alerttext, 'mt-3');
                     successMessageDiv.role = 'alert';
                     successMessageDiv.style.position = 'relative';
 
                     // Add the success message and close button with inline styles
                     successMessageDiv.innerHTML = `
-                <span style="margin-right: 10px;">Category deleted successfully</span>
-                <button type="button" class="close" aria-label="Close" onclick="closeSuccessMessage(this)">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            `;
-
-                    // Append the success message div to the body or another container element
+            <span style="margin-right: 10px;">${data.message}</span>
+            <button type="button" class='close' aria-label="Close" onclick="closeSuccessMessage(this)">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        `;
+                    if (container && container.innerHTML.trim() !== '') {
+                        container.innerHTML = '';
+                    }
                     container.appendChild(successMessageDiv);
-            })
-            .catch(error => console.error('Error fetching category data:', error));
+                    setTimeout(function () {
+                        container.innerHTML = '';
+                        location.reload()
+                    }, 5000);
+
+                })
+                .catch(error => console.error('Error fetching category data:', error));
         }
     }
+
     function closeSuccessMessage(button) {
-        const successMessageDiv = button.closest('.alert-success');
+        const successMessageDiv = button.closest('.alert');
         if (successMessageDiv) {
             successMessageDiv.remove();
         }
-        
     }
 </script>

@@ -5,7 +5,7 @@
     <div class="main-cards">
         <div class="card">
             <div class="card-inner">
-                <p class="text-primary">PRODUCTS</p>
+                <a class="text-primary" href="products.php">PRODUCTS</a>
                 <span class="material-icons-outlined text-blue">inventory_2</span>
             </div>
             <span class="text-primary font-weight-bold">249</span>
@@ -13,7 +13,7 @@
 
         <div class="card">
             <div class="card-inner">
-                <p class="text-primary">PURCHASE ORDERS</p>
+                <a class="text-primary" href="purchaseOrder.php">SALES ORDERS</a>
                 <span class="material-icons-outlined text-orange">add_shopping_cart</span>
             </div>
             <span class="text-primary font-weight-bold">83</span>
@@ -21,19 +21,34 @@
 
         <div class="card">
             <div class="card-inner">
-                <p class="text-primary">SALES ORDERS</p>
+                <a class="text-primary" href="categories.php">CATEGORY</a>
+                <span class="material-icons-outlined text-orange">add_shopping_cart</span>
+            </div>
+            <span class="text-primary font-weight-bold">83</span>
+        </div>
+        <div class="card">
+            <div class="card-inner">
+                <a class="text-primary" href="customers.php">CUSTOMERS</a>
+                <span class="material-icons-outlined text-orange">add_shopping_cart</span>
+            </div>
+            <span class="text-primary font-weight-bold">83</span>
+        </div>
+
+        <!-- <div class="card">
+            <div class="card-inner">
+                <p class="text-primary">c</p>
                 <span class="material-icons-outlined text-green">shopping_cart</span>
             </div>
             <span class="text-primary font-weight-bold">79</span>
-        </div>
+        </div> -->
 
-        <div class="card">
+        <!-- <div class="card">
             <div class="card-inner">
                 <p class="text-primary">NOTIFICATIONS</p>
                 <span class="material-icons-outlined text-red">notification_important</span>
             </div>
             <span class="text-primary font-weight-bold">56</span>
-        </div>
+        </div> -->
     </div>
 </div>
 

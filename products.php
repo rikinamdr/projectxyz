@@ -7,7 +7,7 @@ $sql = "";
 // Check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
     // Redirect to the login page if not logged in
-    header("Location: login.php");
+    header("Location: index.php");
     exit();
 }
 
@@ -17,8 +17,9 @@ function getProducts()
 {
     global $conn;
     require('dbconnect.php');
-    $sql = "SELECT * FROM products order by created_at desc";
+    $sql = "SELECT products.*, category.name as category_name FROM products JOIN category ON products.category_id = category.id order by created_at desc";
     $result = $conn->query($sql);
+
 
     $products = [];
 
@@ -29,6 +30,26 @@ function getProducts()
     }
     return $products;
 }
+
+function getCategories()
+{
+    global $conn;
+    require('dbconnect.php');
+    $sql = "SELECT * FROM category ";
+    $result = $conn->query($sql);
+    
+    
+
+    $category = [];
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $category[] = $row;
+        }
+    }
+    return $category;
+}
+$categories=getCategories();
 
 function addUpdateProduct($post)
 {
@@ -52,7 +73,7 @@ function addUpdateProduct($post)
             if ($isImage !== false) {
                 // Move the uploaded file to the specified directory
                 if (move_uploaded_file($_FILES['productImage']['tmp_name'], $targetPath)) {
-                    // Read the contents of the uploaded image file as a binary string
+                    //  Read the contents of the uploaded image file as a binary string
                     // $imageData = file_get_contents($targetPath);
                     $imageName = $fileName;
                     // Encode the binary image data as base64 to store in the database
@@ -72,9 +93,9 @@ function addUpdateProduct($post)
         $sql .= " Where id=$id";
 
     } else {
-        $sql = "INSERT INTO products (name, price,category,quantity,image,description,admin_id) VALUES ('$name', $price,'$cat',$qty,'$fileName','$description',$userID)";
+        $sql = "INSERT INTO products (name, price,category_id,quantity,image,description,admin_id) VALUES ('$name', $price,$cat,$qty,'$imageName','$description',$userID)";
     }
-
+    
     $result = mysqli_query($conn, $sql);
 
 
@@ -100,6 +121,7 @@ function getProduct($id)
 // Handle form submissions
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $response = '';
+    
     if (isset($_POST['add'])) {
         $response = addUpdateProduct($_POST);
     } elseif (isset($_POST['update'])) {
@@ -108,9 +130,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $id = $_POST['delete'];
         deleteProduct($id);
     }
-    unset($_POST);
-    $_POST = [];
+    
     if ($response) {
+        
 
         if ($_POST['productId'] && ($_POST['productId'] > 0)) {
             $success = "Product updated successfully.";
@@ -122,10 +144,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = "Something went wrong.Please try again.";
 
     }
-
+    unset($_POST);
+    $_POST = [];
 
 }
 $products = getProducts();
+// print_r($products); die("diedie");
 ?>
 <div id="message">
 
@@ -195,7 +219,7 @@ if ($success) {
                         <?php echo $product['name']; ?>
                     </td>
                     <td>
-                        <?php echo $product['category']; ?>
+                        <?php echo $product['category_name']; ?>
                     </td>
                     <td>
                         <?php echo $product['price']; ?>
@@ -226,10 +250,11 @@ if ($success) {
 
         <label for="productCategory">Select a Shoes Category:</label>
         <select id="productCategory" name="productCategory">
-            <option value="sports">Sports Shoes</option>
-            <option value="casual">Casual Shoes</option>
-            <option value="formal">Formal Shoes</option>
-            <option value="sandals">Sandals</option>
+        <?php foreach ($categories as $key => $category): ?>
+            <option value="<?php echo $category['id']; ?>">
+            <?php echo $category['name']; ?>
+            </option>
+            <?php endforeach; ?>
         </select>
 
         <label for="productQuantity">Quantity:</label>
@@ -240,7 +265,7 @@ if ($success) {
         <input type="file" id="productImage" name="productImage">
 
         <input type="hidden" id="productId" name="productId">
-        <button type="submit" id="submit" name="add">Save Product</button>
+        <button type="submit" id="submit" name="add" >Save Product</button>
         <button type="button" onclick="cancelAddEdit()">Cancel</button>
 
     </form>
@@ -345,14 +370,14 @@ if ($success) {
 
         document.getElementById("productId").value = data.id; // Set the product ID for editing
         document.getElementById("productDescription").value = data.description; // Set the product ID for editing
-        document.getElementById("productCategory").value = data.category; // Set the product ID for editing
+        document.getElementById("productCategory").value = data.category_id; // Set the product ID for editing
         document.getElementById("productName").value = data.name;
         document.getElementById("productPrice").value = data.price;
         document.getElementById("productQuantity").value = data.quantity;
         // document.getElementById("productImage").value = data.image;
         document.getElementById('submit').name = "update";
         // alert(data.image);
-        var src = "images/products/" + data.image;
+        var src = "images/products/" + data.image;  
 
         var container = document.getElementById('appendedImageContainer');
         container.innerHTML += '<img style="height:100px; widht:150px;" src="' + src + '" alt="' + data.name + '">';

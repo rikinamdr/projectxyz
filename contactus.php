@@ -58,29 +58,8 @@
                 </div>
             </div>
         </div>
-        <div class="contactform"> 
-            <form action="post">
-                <fieldset>
-                <legend><h2> Message</h2></legend>
-                <div class="inputbox">
-                    <label for="name" >Full Name:</label><br>
-                    <input type="text" name="fullname" placeholder="Enter your fullname">
-                </div>
-                <div class="inputbox">
-                    <label for="E-mail">E-mail:</label><br>
-                    <input type="email" name="email" placeholder="Enter your email">
-                </div>
-                <div class="inputbox">
-                    <label for="message">Message</label><br>
-                    <input type="text" class="message" name="message" placeholder="Enter your message">
-
-                </div>
-                <div class="inputbox">
-                    <br><input type="submit" class="button" value="SEND" onclick="alert('Thank you!!!')">
-                </div>
-                </fieldset>
-            </form>
-        </div>
+        
+        
     </section>
 </body>
 </html>
