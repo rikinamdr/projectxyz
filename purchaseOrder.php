@@ -206,10 +206,10 @@ function getOrder($id)
 
     $(document).ready(function () {
         $('#orderDetailsPopup').modal('hide');
-        // Show order details when the button is clicked
+        
         $(".showOrderDetails").on("click", function (e) {
             e.preventDefault();
-            // Get the order ID (replace this with actual order ID)
+            // Get the order ID 
             var orderId = $(this).attr('data-id');
 
             // Make an AJAX request to fetch order details
@@ -228,7 +228,7 @@ function getOrder($id)
                     $('#orderDetailsPopup').modal('show');
                     $(".deliver-button").on("click", function (e) {
             e.preventDefault();
-            // Get the order ID (replace this with actual order ID)
+            // Get the order ID 
             var orderId = $(this).attr('data-id');
 
             // Make an AJAX request to fetch order details
@@ -275,7 +275,7 @@ function getOrder($id)
             orderDetailsContainer.append('<p><strong>Order ID:</strong> ' + orderDetails.order_id + '</p>');
             orderDetailsContainer.append('<p><strong>Order Date:</strong> ' + orderDetails.order_date + '</p>');
             orderDetailsContainer.append('<p><strong>Total Price:</strong>  ' + parseFloat(orderDetails.total_price).toFixed(2) + '</p>');
-            // Assuming you have a variable orderDetails with the order information
+            
             orderDetailsContainer.append('<p><strong>Order status:</strong> ' + (orderDetails.status == 1 ? 'Delivered' : 'Pending') + '</p>');
             if(orderDetails.status == 1){
                 orderDetailsContainer.append('<p><strong>Delivery date:</strong> ' + orderDetails.delivery_date + '</p>');
@@ -287,7 +287,7 @@ function getOrder($id)
             }
 
                 console.log('Pending');
-      // Do something for pending status+ '</p>');
+
             
             orderDetailsContainer.append('<h2>Products</h2>');
             if (orderDetails.products && orderDetails.products.length > 0) {

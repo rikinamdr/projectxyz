@@ -27,7 +27,7 @@
             <div class="content">
                 <h1>Step into style, Stride with confidence</h1>
                 <h3> Your Sole Destination for Trendsetting Footwear!</h3>
-                <button>Explore</button>
+                <button onclick="redirectToShopPage()">Explore</button>
             </div>
         </div>
         <div class="category">
@@ -59,17 +59,17 @@
             <div class="product1">
                 <div class="card">
                     <img src="images/m2.jpg" alt="">
-                    <p>Name</p>
+                    <p>Glittery</p>
                     
                 </div>
                 <div class="card">
                     <img src="images/m5.jpg" alt="">
-                    <p>Name</p>
+                    <p>Square</p>
                     
                 </div>
                 <div class="card">
                     <img src="images/m7.jpg" alt="">
-                    <p>Name</p>
+                    <p>Cone</p>
                     
                 </div>
             </div>
@@ -81,17 +81,17 @@
             <div class="product2">
                 <div class="card">
                     <img src="images/m8.jpg" alt="">
-                    <p>Name</p>
+                    <p>Blocks</p>
                     
                 </div>
                 <div class="card">
                     <img src="images/s2.png" alt="">
-                    <p>Name</p>
+                    <p>Flats</p>
                     
                 </div>
                 <div class="card">
                     <img src="images/m10.jpg" alt="">
-                    <p>Name</p>
+                    <p>Designer Heels</p>
                     
                 </div>
             </div>
@@ -103,3 +103,10 @@
     </body>
 
 </html>
+<script>
+    
+  function redirectToShopPage() {
+   
+    window.location.href = 'shop.php';
+  }
+</script>

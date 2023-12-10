@@ -82,7 +82,7 @@ if ($customerData['type'] == "add") {
     $result = mysqli_query($conn, $sql);
 
     if ($result) {
-        // Check if a user with the entered email exists
+        
 
         if (mysqli_num_rows($result) > 0) {
             $customer = mysqli_fetch_assoc($result);
@@ -90,7 +90,7 @@ if ($customerData['type'] == "add") {
             // Verify the entered password against the stored hashed password
             if (password_verify($password, $customer['password'])) {
 
-                // Password is correct, create a session and redirect to a logged-in page
+                
                 if ($customer) {
                     $customerId = $customer['id'];
                     $currentDate = date("Y-m-d");

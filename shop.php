@@ -1,8 +1,58 @@
 <?php
+global $conn;
+session_start();
+$cart_count = 0;
+require('dbconnect.php');
+$status = "";
+if (isset($_POST['productId']) && $_POST['productId'] != "") {
+    $productId = $_POST['productId'];
+    $result = mysqli_query(
+        $conn,
+        "SELECT * FROM `products` WHERE `id`=$productId"
+    );
+    $row = mysqli_fetch_assoc($result);
+
+    $name = $row['name'];
+    $description = $row['description'];
+    $price = $row['price'];
+    $quantity = $row['quantity'];
+    $image = $row['image'];
+    $cartArray = array(
+        $productId => array(
+            'id' => $row['id'],
+            'name' => $name,
+            'description' => $description,
+            'price' => $price,
+            'quantity' => 1,
+            'image' => $image
+        )
+    );
+   
+    if (empty($_SESSION["shopping_cart"])) {
+        // If the shopping cart is empty, simply set the cartArray
+        $_SESSION["shopping_cart"] = $cartArray;
+        $status = "<div class='box'>Product is added to your cart!</div>";
+    } else {
+     
+        // If the shopping cart is not empty, check if the product already exists
+        $cartIds = array_column($_SESSION["shopping_cart"], 'id');
+
+        $existingProduct = in_array($productId, $cartIds);
+      
+        if ($existingProduct) {
+            // Product already exists in the cart
+            $status = "<div class='box' style='color:red;'> Product is already added to your cart!</div>";
+        } else {
+            // Product does not exist in the cart, merge the arrays
+            $_SESSION["shopping_cart"] = array_merge($_SESSION["shopping_cart"], $cartArray);
+            $status = "<div class='box'>Product is added to your cart!</div>";
+        }
+    }
+}
+
 function getProducts()
 {
     global $conn;
-    require('dbconnect.php');
     $sql = "SELECT * FROM products";
     $result = $conn->query($sql);
 
@@ -17,6 +67,7 @@ function getProducts()
 }
 
 $products = getProducts();
+
 ?>
 
 <!DOCTYPE html>
@@ -29,67 +80,87 @@ $products = getProducts();
     <link rel="stylesheet" href="assets/shop.css">
     <link rel="stylesheet" href="assets/cart.css">
     <link rel="stylesheet" href="assets/header.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.6.0/css/all.min.css">
 
     <title>product Page</title>
 </head>
+
 <body>
 
-<header class="header">
-    <a href="#" class="logo">XYZshoe</a>
+    <header class="header">
+        <a href="#" class="logo">XYZshoe</a>
 
-    <nav class="navbar">
-        <a href="welcome.php">HOME</a>
-        <a href="index.php">LOG IN</a>
-        <a href="shop.php">SHOP</a>
-        <a href="contactus.php">CONTACT</a>
-        <a href="aboutus.php">ABOUT US</a>
+        <nav class="navbar">
+            <a href="welcome.php">HOME</a>
+            <a href="index.php">LOG IN</a>
+            <a href="shop.php">SHOP</a>
+            <a href="contactus.php">CONTACT</a>
+            <a href="aboutus.php">ABOUT US</a>
 
 
-    </nav>
-    <div class="cart-icons">
-        <button type="button" class="btn btn-success my-2 my-sm-0" data-toggle="modal"
-                data-target="#paymentCartModal">
-            <i class="fas fa-shopping-cart total-count"></i>
-        </button>
-
+        </nav>
+        <?php
+      
+        if (!empty($_SESSION["shopping_cart"])) {
+            $cart_count = count(array_keys($_SESSION["shopping_cart"]));
+        }
+        ?>
         
-    </div>
+        <div class="cart-icons">
+            <button type="button" class="btn btn-success my-2 my-sm-0" data-toggle="modal"
+                data-target="#paymentCartModal">
+                <i class="fas fa-shopping-cart total-count">
+                    <?php echo $cart_count > 0 ? $cart_count : ''; ?>
+                </i>
+            </button>
 
-</header>
 
-<section id="feature" class="section-p1">
-</section>
 
-<section id="product1" class="section-p1">
-    <h1> Our New Product</h1>
-    <p> They are crafted in a variety of designs and patterns.</p>
+        </div>
 
-    <div class="pro-container">
-        <?php foreach ($products as $key => $product): ?>
-            <div class="pro">
-                <img src="images/products/<?php echo $product['image']; ?>">
-                <div class="des">
-                    <h5> <?php echo $product['name']; ?></h5>
+    </header>
 
-                    <h4><?php echo $product['description']; ?></h4>
-                    <h4>Rs.<?php echo $product['price']; ?></h4>
+
+    <section id="product1" class="section-p1">
+        <h1> Our New Product</h1>
+        <p> They are crafted in a variety of designs and patterns.</p>
+        <div style="clear:both;"></div>
+
+        <div class="message_box" style="margin:10px 0px;">
+            <?php echo $status; ?>
+        </div>
+        <div class="pro-container">
+            <?php foreach ($products as $key => $product): ?>
+                <div class="pro">
+                    <form action="" method="post">
+                        <input type='hidden' name='productId' value="<?php echo $product['id']; ?>" />
+                        <img src="images/products/<?php echo $product['image']; ?>">
+                        <div class="des">
+                            <h5>
+                                <?php echo $product['name']; ?>
+                            </h5>
+
+                            <h4>
+                                <?php echo $product['description']; ?>
+                            </h4>
+                            <h4>Rs.
+                                <?php echo $product['price']; ?>
+                            </h4>
+
+                        </div>
+
+                        <button type="submit" class="default-btn border-radius-5"> Add to cart
+                        </button>
+                    </form>
 
                 </div>
-               
-                <button type="button" data-name="<?php echo $product['name']; ?>"
-                        data-id="<?php echo $product['id']; ?>"
-                        data-image="images/products/<?php echo $product['image']; ?>"
-                        data-price="<?php echo $product['price']; ?>" class="default-btn border-radius-5"> Add to cart
-                </button>
-
-            </div>
-        <?php endforeach; ?>
+            <?php endforeach; ?>
 
 
-</section>
-<div class="modal fade payment-cart-modal" id="paymentCartModal" data-backdrop="static" data-keyboard="false"
+    </section>
+    <!-- <div class="modal fade payment-cart-modal" id="paymentCartModal" data-backdrop="static" data-keyboard="false"
      tabindex="-1" aria-labelledby="paymentCartModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -278,16 +349,15 @@ $products = getProducts();
             </div>
         </div>
     </div>
-</div>
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</div> -->
+    <!-- <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script src="assets/script.js"></script>
-<script src="script.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> -->
+    <!-- <script src="assets/shop.js"></script> -->
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script> -->
 
 </body>
+
 </html>
-
-

@@ -8,7 +8,7 @@
                 <a class="text-primary" href="admindashboard.php?tab=products">PRODUCTS</a>
                 <span class="material-icons-outlined text-blue">inventory_2</span>
             </div>
-            <span class="text-primary font-weight-bold">249</span>
+            
         </div>
 
         <div class="card">
@@ -16,7 +16,7 @@
                 <a class="text-primary" href="admindashboard.php?tab=purchaseOrder">PURCHASE ORDER</a>
                 <span class="material-icons-outlined text-orange">add_shopping_cart</span>
             </div>
-            <span class="text-primary font-weight-bold">83</span>
+            
         </div>
 
         <div class="card">
@@ -24,14 +24,22 @@
                 <a class="text-primary" href="admindashboard.php?tab=categories">CATEGORY</a>
                 <span class="material-icons-outlined text-orange">add_shopping_cart</span>
             </div>
-            <span class="text-primary font-weight-bold">83</span>
+            
         </div>
         <div class="card">
             <div class="card-inner">
                 <a class="text-primary" href="admindashboard.php?tab=customers">CUSTOMERS</a>
                 <span class="material-icons-outlined text-orange">add_shopping_cart</span>
             </div>
-            <span class="text-primary font-weight-bold">83</span>
+            
+        </div>
+
+        <div class="card">
+            <div class="card-inner">
+                <a class="text-primary" href="admindashboard.php?tab=admins">ADMIN</a>
+                <span class="material-icons-outlined text-orange">add_shopping_cart</span>
+            </div>
+            
         </div>
 
         
