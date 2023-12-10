@@ -1,0 +1,136 @@
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    
+   
+    
+}
+h2{
+padding-bottom: 30px;
+}
+
+header .button{
+background-color: rgb(234, 10, 130);
+height: 30px;
+width: 30px;
+border-color:rgb(252, 0, 126);
+color: white;
+border-radius: 5px;
+float: right;
+
+}
+
+.form-group {
+display: none;
+}
+
+
+
+
+hr {
+border: 1px solid #ccc; /* You can replace this color code with your desired color */
+margin: 20px 0;
+}
+
+.email{
+width: 300px;
+height: 30px;
+background-color: rgb(216, 246, 255);
+border-width: 1px;
+border-color: grey ;
+border-radius: 5px;
+padding: 5px;
+}
+.password{
+width: 300px;
+height: 30px;
+background-color: rgb(216, 246, 255);
+border-width: 1px;
+border-color: grey ;
+border-radius: 5px;
+padding: 5px;
+}
+
+.button1{
+height: 40px;
+width: 80px;
+background-color: rgb(43, 79, 197);
+color: white;
+}
+.h1, .h2, .h3, .h4, .h5{
+display: inline;
+margin-right: 60px;
+}
+
+img{
+height: 70px;
+width: 100px;
+}
+.value{
+display: inline;
+}
+
+.number{
+width: 30px;
+}
+
+.value1, .value2, .value3, .value4, .number{
+display: inline;
+margin-right: 40px;
+}
+
+.value4{
+background-color: rgb(234, 10, 130);
+height: 30px;
+width: 30px;
+border-color:rgb(252, 0, 126);
+color: white;
+border-radius: 5px;
+
+}
+.total_price{
+float: right;
+padding: 30px;
+padding-top: 100px;
+padding-right:100px ;
+}
+.close{
+float: right;
+width: 80px;
+height: 30px;
+}
+.form2{
+width: 300px;
+height: 30px;
+background-color: rgb(216, 246, 255);
+border-width: 1px;
+border-color: grey ;
+border-radius: 5px;
+padding: 5px;
+}
+.container2{
+padding: 30%;
+padding-top:10% ;
+}
+.container1{
+padding-left: 40%;
+padding-top: 10%;
+background-color: rgb(237, 224, 224);
+border-radius: 5px;
+padding-right: 30%;
+
+}
+form{
+
+box-shadow: 20px;
+border-radius: 5px;
+background-color: white;
+padding: 10%;
+}
+
+
+
+
+
