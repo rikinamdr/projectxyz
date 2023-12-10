@@ -134,7 +134,7 @@ $users = getUsers();
             </tr>
             </thead>
             <tbody>
-            <!-- Sample data, replace with your actual user data -->
+            
             <?php foreach ($users as $key => $user): ?>
                 <tr id="table-<?php echo $user['id'];?>">
                     <td>
@@ -195,7 +195,7 @@ $users = getUsers();
         border-collapse: collapse;
         margin-top: 20px;
         overflow-x: auto;
-        /* Enable horizontal scrolling on small screens */
+        
     }
 
     th,
@@ -221,12 +221,10 @@ $users = getUsers();
 
     #userList {
         display: block;
-        /* Display the user list by default */
     }
 
     #addEditUserForm {
         display: none;
-        /* Hide the user add/edit form by default */
         margin-top: 20px;
     }
 
@@ -240,14 +238,14 @@ $users = getUsers();
         margin-bottom: 20px;
     }
 
-    /* Style for better visual presentation */
+    
     select:hover {
         border-color: #555;
     }
 
     select:focus {
         outline: none;
-        border-color: #2196F3; /* Add your preferred focus color */
+        border-color: #2196F3;
     }
 </style>
 <script>
@@ -297,7 +295,7 @@ $users = getUsers();
                 }, 5000);
 
 
-                // Append the success message div to the body or another container element
+               
 
             })
             .catch(error => {
@@ -342,15 +340,8 @@ $users = getUsers();
                 confirmPasswordLabel.style.display = 'none';
             }
         }
-        // document.getElementById("password").readOnly = true;
-        // document.getElementById("confirmPassword").readOnly = true;
-        // document.getElementById("userImage").value = data.image;
+       
         document.getElementById('submit').name = "update";
-        // alert(data.image);
-        // var src = "images/users/" + data.image;
-
-        // var container = document.getElementById('appendedImageContainer');
-        // container.innerHTML += '<img style="height:100px; widht:150px;" src="' + src + '" alt="' + data.name + '">';
     }
 
     function showEditUserForm(userId) {

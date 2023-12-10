@@ -1,79 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-   <meta charset="utf-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>payment</title>
-   <link href="assets/payment.css" rel="stylesheet">
-   <link href="assets/header.css" rel="stylesheet">
-   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <head>
+        <meta charset="utf-5">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <title>paymentmethod</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+        <link rel="stylesheet" href="assets/payment.css">
+    </head>
+    <body>
 
-</head>
-
-<body>
-    <?php include ('header.php')?>
-    <div class="top">
-        <h2>Payment form</h2>
-        <form method="POST">
-            <h4>Account</h4>
-            <div class="input-content">
-                <div class="input-box">
-                    <input type="text" placeholder="Full name" required class="name">
-                    <i class="bi bi-person-fill icon"></i>
-                </div>
-            </div> 
-            <div class="input-content">
-                <div class="input-box">
-                    <input type="text" placeholder="Email Address" required class="name">
-                    <i class="bi bi-envelope-at-fill icon"></i>
-                </div>
+        <div class="container">
+            <div class="title">
+                <h4>Select a <span style="color: rgb(144, 5, 123)">Payment </span>method</h4>
             </div>
 
-            <div class="input-content">
-                <div class="input-box">
-                     <h4>Payment Details</h4>
-                     <input type="radio" name="pay" id="pm1" checked class="radio">
-                     <label for="pm1">
-                     <span>
-                         <i class="bi bi-wallet-fill"></i>
-                         Cash on Delivery
-                     </span>
-                 </label>
-                 <input type="radio" name="pay" id="pm2" class="radio">
-                 <label for="pm2">
-                    <span>
-                        <i class="bi bi-credit-card-fill"></i>
-                        Credit card
-                    </span>
-                 </label>
+            <form action="#">
+                <input type="radio" name="payment" id="card">
+                <input type="radio" name="payment" id="cash">
+                <input type="radio" name="payment" id="paypal">
+                <input type="radio" name="payment" id="esewa">
 
-                </div> 
-             </div> 
-             <div class="input-content">
-                <div class="input-box">
-                    <input type="text" placeholder="Your address" required class="name">
+                <div class="category">
+                    <label for="card" class="cardMethod">
+                        <div class="imgname">
+                            <div class="imgcontainer card">
+                                <img src="assets/visa.png" alt="">
+                            </div>
+                            <span class="name">Credit Card</span>
+                        </div>
+                        <span class="check"><i class="fa-sharp fa-solid fa-circle-check" style="color: #6064b6;"></i></span>
+                    </label>
+                    <label for="cash" class="cashMethod">
+                        <div class="imgname">
+                            <div class="imgcontainer cash">
+                                <img src="assets/cash.png" alt="">
+                            </div>
+                            <span class="name">Cash on Delivery</span>
+                        </div>
+                        <span class="check"><i class="fa-sharp fa-solid fa-circle-check" style="color: #6064b6;"></i></span>
+                    </label>
+                    <label for="paypal" class="paypalMethod">
+                        <div class="imgname">
+                            <div class="imgcontainer paypal">
+                                <img src="assets/paypal.png" alt="">
+                            </div>
+                            <span class="name">Paypal</span>
+                        </div>
+                        <span class="check"><i class="fa-sharp fa-solid fa-circle-check" style="color: #6064b6;"></i></span>
+                    </label>
+                    <label for="esewa" class="esewaMethod">
+                        <div class="imgname">
+                            <div class="imgcontainer esewa">
+                                <img src="assets/esewa.png" alt="">
+                            </div>
+                            <span class="name">Esewa</span>
+                        </div>
+                        <span class="check"><i class="fa-sharp fa-solid fa-circle-check" style="color: #6064b6;"></i></span>
+                    </label>
                 </div>
-             </div>
-             <div class="input-content">
-                <div class="input-box">
-                    <input type="text" placeholder="Phone Number" required class="name">
-                    <i class="bi bi-telephone icon"></i>
-                </div>
-             </div>
-             <div class="input-content">
-                <div class="input-box">
-                   <!-- <button type="submit" onclick="myFunction()">Proceed to Checkout</button>  -->
-                   <a href="thankyou.php" class="button">Confirm Order</a>
-                </div>
-             </div>
 
-        </form>
-    </div>
-</body>
-<!-- <script>
-    myFunction(){
-        windows.location.href="thankyou.php"
-    }
-</script> -->
+                <div class="confirm">
+                    <button><a href="thankyou.php">Confirm</a></button>
+                    <!-- <a href="thankyou.php" class="button"> Confirm </a> -->
+                </div>    
+            </form>
+        </div>
+    </body>
     
-</html>

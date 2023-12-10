@@ -65,6 +65,7 @@ function getOrder($id)
                     <th>Payment Method</th>
                     <th>Total Price</th>
                     <th>Ordered date</th>
+                    <th>Status</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -88,9 +89,12 @@ function getOrder($id)
                         <td>
                             <?php echo $order['order_date']; ?>
                         </td>
+                        <td>
+                            <?php echo $order['status']==1?"Delivered":"Pending"; ?>
+                        </td>
                         <td class="action-buttons">
-                            <!-- <button onclick="viewOrder(<?php echo $order['id']; ?>)">View</button> -->
-                            <button data-id="<?php echo $order['id']; ?>" id="showOrderDetails">Show Order Details</button>
+                            
+                            <button data-id="<?php echo $order['id']; ?>" class="showOrderDetails">View</button>
 
                         </td>
                     </tr>
@@ -109,6 +113,7 @@ function getOrder($id)
                 </button>
             </div>
             <div class="modal-body">
+
                 <!-- Container for displaying JSON data in the modal -->
                 <div id="jsonDataContainer">
                     <!-- JSON data will be inserted here dynamically -->
@@ -201,10 +206,10 @@ function getOrder($id)
 
     $(document).ready(function () {
         $('#orderDetailsPopup').modal('hide');
-        // Show order details when the button is clicked
-        $("#showOrderDetails").on("click", function (e) {
+        
+        $(".showOrderDetails").on("click", function (e) {
             e.preventDefault();
-            // Get the order ID (replace this with your actual order ID)
+            // Get the order ID 
             var orderId = $(this).attr('data-id');
 
             // Make an AJAX request to fetch order details
@@ -221,6 +226,33 @@ function getOrder($id)
                     console.log(response);
                     // Show the popup
                     $('#orderDetailsPopup').modal('show');
+                    $(".deliver-button").on("click", function (e) {
+            e.preventDefault();
+            // Get the order ID 
+            var orderId = $(this).attr('data-id');
+
+            // Make an AJAX request to fetch order details
+            $.ajax({
+                url: "Controller/change_order_status.php",
+                method: "POST",
+                data: { orderId: orderId, status: 1 },
+                dataType: "json",
+                success: function (response) {
+                    console.log(response);
+                   
+                    $('#message').empty();
+                     // Display success message with a close button
+                     var successMessage = $('<div>').text('Order  has been delivered!').addClass('success-message');
+                        var closeButton = $('<button>').text('Close').addClass('close-button');
+                        $('#message').append(closeButton);
+                        $('#message').append(successMessage);
+                        location.reload();
+                },
+                error: function () {
+                    console.log("Error fetching order details.");
+                }
+            });
+        });
                 },
                 error: function () {
                     console.log("Error fetching order details.");
@@ -228,7 +260,9 @@ function getOrder($id)
             });
         });
 
-        // Close the popup when the close button is clicked
+       
+
+        
 
         function displayOrderDetails(orderDetails) {
             var orderDetailsContainer = $('#jsonDataContainer');
@@ -236,23 +270,46 @@ function getOrder($id)
             // Clear previous content
             orderDetailsContainer.empty();
 
-            // Display general order information
+            orderDetailsContainer.append('<div id="message"></div>');
+
             orderDetailsContainer.append('<p><strong>Order ID:</strong> ' + orderDetails.order_id + '</p>');
             orderDetailsContainer.append('<p><strong>Order Date:</strong> ' + orderDetails.order_date + '</p>');
             orderDetailsContainer.append('<p><strong>Total Price:</strong>  ' + parseFloat(orderDetails.total_price).toFixed(2) + '</p>');
+            
+            orderDetailsContainer.append('<p><strong>Order status:</strong> ' + (orderDetails.status == 1 ? 'Delivered' : 'Pending') + '</p>');
+            if(orderDetails.status == 1){
+                orderDetailsContainer.append('<p><strong>Delivery date:</strong> ' + orderDetails.delivery_date + '</p>');
 
-            // Display product details
+            }else{
+                var deliveredButton = $('<button>').text('Delivered').addClass('deliver-button').attr('data-id', orderDetails.order_id);
+                orderDetailsContainer.append("Click on the button to deliver order:");
+                orderDetailsContainer.append(deliveredButton);    
+            }
+
+                console.log('Pending');
+
+            
             orderDetailsContainer.append('<h2>Products</h2>');
             if (orderDetails.products && orderDetails.products.length > 0) {
-                var productList = $('<ul>');
+                var table = $('<table>').addClass('product-table');
+                var headerRow = $('<tr>').append(
+                    $('<th>').text('Product Name'),
+                    $('<th>').text('Quantity'),
+                    $('<th>').text('Price')
+                );
+                table.append(headerRow);
 
                 // Iterate through each product in the order
                 orderDetails.products.forEach(function (product) {
-                    productList.append('<li><strong>Product Name:</strong> ' + product.product_name + ', <strong>Quantity:</strong> ' + product.quantity + ', <strong>Price:</strong> $' + parseFloat(product.price).toFixed(2) + '</li>');
-                    // Add more product details as needed
+                    var row = $('<tr>').append(
+                        $('<td>').text(product.product_name),
+                        $('<td>').text(product.quantity),
+                        $('<td>').text('$' + parseFloat(product.price).toFixed(2))
+                    );
+                    table.append(row);
                 });
 
-                orderDetailsContainer.append(productList);
+                orderDetailsContainer.append(table);
             } else {
                 orderDetailsContainer.append('<p>No products found for this order.</p>');
             }

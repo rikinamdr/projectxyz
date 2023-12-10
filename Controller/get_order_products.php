@@ -10,6 +10,8 @@ $sql = "SELECT
     orders.id AS order_id,
     orders.total_price,
     orders.order_date,
+    orders.status,
+    orders.delivery_date,
     products.name,
     order_products.quantity,
     order_products.price
@@ -30,6 +32,9 @@ $order = [];
         $order['order_id'] = $row['order_id'];
         $order['total_price'] = $row['total_price'];
         $order['order_date'] = $row['order_date'];
+        $order['status'] = $row['status'];
+        $order['delivery_date'] = $row['delivery_date'];
+
 
         // Check if the 'products' key is already present in $order
         if (!isset($order['products'])) {

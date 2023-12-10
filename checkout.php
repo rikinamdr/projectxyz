@@ -44,18 +44,11 @@
       <label for="card-number">Card Number</label>
       <input type="text" id="card-number" name="card-number" required>
 
-      <!-- <label for="expiry-date">Expiry Date</label>
-      <input type="text" id="expiry-date" name="expiry-date" placeholder="MM/YY" required>
-
-      <label for="cvv">CVV</label>
-      <input type="text" id="cvv" name="cvv" required> -->
-
+      
       <input type="submit" value="Submit">
     </form>
   </div>
 
-  <script>
-    // You can add JavaScript for validation or additional functionality here
-  </script>
+  
 </body>
 </html>

@@ -82,7 +82,7 @@ function deleteCategory($id)
 ?>
 
 <?php
-// Function to read category from the file
+
 // Handle form submissions
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['add'])) {
@@ -133,7 +133,7 @@ $category = getCategory();
             </tr>
             </thead>
             <tbody>
-            <!-- Sample data, replace with your actual category data -->
+            
             <?php foreach ($category as $key => $categories): ?>
                 <tr id="table-<?php echo $categories['id'];?>">
                     <td>
@@ -146,9 +146,7 @@ $category = getCategory();
                     <td>
                         <?php echo $categories['description']; ?>
                     </td>
-                    <!-- <td>
-                        <?/*php echo $categories['email'];*/ ?>
-                    </td> -->
+                   
                     <td class="action-buttons">
                         <button onclick="deleteCategory(<?php echo $categories['id']; ?>)">Delete</button>
                         <button onclick="showEditCategoryForm(<?php echo $categories['id']; ?>)">Edit</button>
@@ -169,15 +167,6 @@ $category = getCategory();
         <label for="description">Description:</label>
         <input type="text" id="description" name="description" rows="4" required>
 
-        <!-- <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
-
-        <label for="confirmPassword">Conirm Password:</label>
-        <input type="password" id="confirmPassword" name="confirmPassword" required> -->
-
         <input type="hidden" id="categoryId" name="categoryId">
         <button type="button" onclick="submitForm()" name="add">Save Category</button>
         <button type="button" onclick="cancelAddEdit()">Cancel</button>
@@ -194,7 +183,7 @@ $category = getCategory();
         border-collapse: collapse;
         margin-top: 20px;
         overflow-x: auto;
-        /* Enable horizontal scrolling on small screens */
+       
     }
 
     th,
@@ -225,7 +214,6 @@ $category = getCategory();
 
     #addEditCategoryForm {
         display: none;
-        /* Hide the category add/edit form by default */
         margin-top: 20px;
     }
 
@@ -239,14 +227,14 @@ $category = getCategory();
         margin-bottom: 20px;
     }
 
-    /* Style for better visual presentation */
+    
     select:hover {
         border-color: #555;
     }
 
     select:focus {
         outline: none;
-        border-color: #2196F3; /* Add your preferred focus color */
+        border-color: #2196F3; 
     }
 </style>
 <script>
@@ -290,7 +278,7 @@ $category = getCategory();
                     document.getElementById("categoryId").value = ""; // Clear any previous category ID
                 }
 
-                // Append the success message div to the body or another container element
+                
 
             })
             .catch(error => {
@@ -335,15 +323,9 @@ $category = getCategory();
                 confirmPasswordLabel.style.display = 'none';
             }
         }
-        // document.getElementById("password").readOnly = true;
-        // document.getElementById("confirmPassword").readOnly = true;
-        // document.getElementById("categoryImage").value = data.image;
+        
         document.getElementById('submit').name = "update";
-        // alert(data.image);
-        // var src = "images/category/" + data.image;
-
-        // var container = document.getElementById('appendedImageContainer');
-        // container.innerHTML += '<img style="height:100px; widht:150px;" src="' + src + '" alt="' + data.name + '">';
+        
     }
 
     function showEditCategoryForm(categoryId) {

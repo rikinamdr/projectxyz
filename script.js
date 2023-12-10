@@ -171,7 +171,7 @@ $('.show-cart').on("change", ".item-count", function (event) {
 });
 displayCart();
 
-//////// ui script start /////////
+
 // Tabs Single Page
 $('.tab ul.tabs').addClass('active').find('> li:eq(0)').addClass('current');
 $('.tab ul.tabs li a').on('click', function (g) {
@@ -207,13 +207,12 @@ $('#search_field').on('keyup', function () {
 
 });
 $('.checkoutButton').on('click', function (e) {
-    // Prevent the default form submission
+    
     e.preventDefault();
 
-    // Get the form element using 'this' directly
+  
     var $form = $(this).closest('form');
 
-    // Initialize the jQuery Validation plugin on the form
     $form.validate();
 
     // Check if the form is valid
@@ -255,15 +254,16 @@ $('.checkoutButton').on('click', function (e) {
 
         // Check if there are products in the order
         if (orderDetails.products.length > 0) {
-            // Make an AJAX request to save the order data using $.ajax
+            
             $.ajax({
                 url: "Controller/save_order_data.php",
                 type: "POST",
                 data: orderDetails, // Use the serialized form data
-                success: function(response) { var response = JSON.parse(response);
+                success: function (response) {
+                    var response = JSON.parse(response);
                     console.log(response.message); // Check the response in the console
                     // Handle the response here
-                    console.log('Success!'); // Log success to the console
+                    console.log('Success!'); 
                     console.log('Order details sent successfully:', response);
                     // Handle the success case with the parsed JSON data
                     var alerttext = response.success ? "success" : "error";
@@ -273,7 +273,7 @@ $('.checkoutButton').on('click', function (e) {
                     successMessageDiv.role = 'alert';
                     successMessageDiv.style.position = 'relative';
 
-                    // Add the success message and close button with inline styles
+                    
                     successMessageDiv.innerHTML = `
             <span style="margin-right: 10px;">${response.message}</span>
             <button type="button" class='close btn-close' aria-label="Close"  onclick="closeSuccessMessage(this)">
@@ -295,24 +295,24 @@ $('.checkoutButton').on('click', function (e) {
                             $('#paymentCartModal').modal('hide');
                         }, 5000);
 
-                    }else{
+                    } else {
                         setTimeout(function () {
                             container.innerHTML = '';
-                            $('#paymentCartModal').modal('hide');
+                         
                         }, 5000);
                     }
 
 
-                    // Handle success if needed
+                    
                 },
-                error: function(error) {
+                error: function (error) {
                     console.error("Error:", error);
-                    // Handle error if needed
+                   
                 }
             });
         } else {
             alert("Please select at least one product to checkout");
-            // Optionally, you might want to prevent further execution here
+            
             return false;
         }
     }
@@ -324,4 +324,20 @@ function closeSuccessMessage(button) {
     }
 }
 
-// Function to send order details to the server
+
+document.querySelectorAll('input[name="accountOption"]').forEach(function (radio) {
+    radio.addEventListener('change', function () {
+        var selectedOption = document.querySelector('input[name="accountOption"]:checked').value;
+
+        // Hide both forms initially
+        document.getElementById('existingAccountForm').style.display = 'none';
+        document.getElementById('newAccountForm').style.display = 'none';
+
+        // Show the selected form
+        if (selectedOption === 'existing') {
+            document.getElementById('existingAccountForm').style.display = 'block';
+        } else if (selectedOption === 'new') {
+            document.getElementById('newAccountForm').style.display = 'block';
+        }
+    });
+});

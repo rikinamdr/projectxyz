@@ -11,8 +11,6 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-// Now you can access session data
-
 function getProducts()
 {
     global $conn;
@@ -62,7 +60,7 @@ function addUpdateProduct($post)
     $qty = $post['productQuantity'];
     $imageName = '';
     if (isset($_FILES['productImage']) && !empty($_FILES['productImage'])) {
-        $uploadDirectory = 'images/products/'; // Specify the directory where you want to save the product images
+        $uploadDirectory = 'images/products/'; 
         if ($_FILES['productImage']['name']) {
             // Get the details of the uploaded file
             $fileName = basename($_FILES['productImage']['name']);
@@ -73,11 +71,8 @@ function addUpdateProduct($post)
             if ($isImage !== false) {
                 // Move the uploaded file to the specified directory
                 if (move_uploaded_file($_FILES['productImage']['tmp_name'], $targetPath)) {
-                    //  Read the contents of the uploaded image file as a binary string
-                    // $imageData = file_get_contents($targetPath);
                     $imageName = $fileName;
-                    // Encode the binary image data as base64 to store in the database
-                    // $base64ImageData = base64_encode($imageData);
+                
                 }
             }
         }
@@ -117,7 +112,7 @@ function getProduct($id)
 ?>
 
 <?php
-// Function to read products from the file
+
 // Handle form submissions
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $response = '';
@@ -149,7 +144,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 }
 $products = getProducts();
-// print_r($products); die("diedie");
+
 ?>
 <div id="message">
 
@@ -203,7 +198,7 @@ if ($success) {
             </tr>
             </thead>
             <tbody>
-            <!-- Sample data, replace with your actual product data -->
+            
             <?php foreach ($products as $key => $product): ?>
                 <tr id="table-<?php echo $product['id']; ?>">
                     <td>
@@ -306,12 +301,12 @@ if ($success) {
 
     #productList {
         display: block;
-        /* Display the product list by default */
+        
     }
 
     #addEditProductForm {
         display: none;
-        /* Hide the product add/edit form by default */
+        
         margin-top: 20px;
     }
 
@@ -325,14 +320,14 @@ if ($success) {
         margin-bottom: 20px;
     }
 
-    /* Style for better visual presentation */
+    
     select:hover {
         border-color: #555;
     }
 
     select:focus {
         outline: none;
-        border-color: #2196F3; /* Add your preferred focus color */
+        border-color: #2196F3; 
     }
 
     mt-3, .my-3 {
@@ -354,29 +349,28 @@ if ($success) {
         border-radius: 0.25rem;
     }
 </style>
-<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
 
 <script>
     function showAddProductForm() {
         document.getElementById("productList").style.display = "none";
         document.getElementById("addEditProductForm").style.display = "block";
-        document.getElementById("productId").value = ""; // Clear any previous product ID
-        document.getElementById("submit").value = "add"; // Clear any previous product ID
+        document.getElementById("productId").value = ""; 
+        document.getElementById("submit").value = "add"; 
     }
 
     function fillFormWithData(data) {
         document.getElementById("productList").style.display = "none";
         document.getElementById("addEditProductForm").style.display = "block";
 
-        document.getElementById("productId").value = data.id; // Set the product ID for editing
-        document.getElementById("productDescription").value = data.description; // Set the product ID for editing
-        document.getElementById("productCategory").value = data.category_id; // Set the product ID for editing
+        document.getElementById("productId").value = data.id; 
+        document.getElementById("productDescription").value = data.description; 
+        document.getElementById("productCategory").value = data.category_id; 
         document.getElementById("productName").value = data.name;
         document.getElementById("productPrice").value = data.price;
         document.getElementById("productQuantity").value = data.quantity;
-        // document.getElementById("productImage").value = data.image;
+       
         document.getElementById('submit').name = "update";
-        // alert(data.image);
+        
         var src = "images/products/" + data.image;  
 
         var container = document.getElementById('appendedImageContainer');
@@ -404,14 +398,14 @@ if ($success) {
                     // Handle the success case with the parsed JSON data
 
                     var container = document.getElementById('message');
-                    // container.innerHTML += 'Product Deleted sucessfully';
+                
                     document.getElementById("table-" + productId).remove();
                     const successMessageDiv = document.createElement('div');
                     successMessageDiv.classList.add('alert', 'alert-success', 'mt-3');
                     successMessageDiv.role = 'alert';
                     successMessageDiv.style.position = 'relative';
 
-                    // Add the success message and close button with inline styles
+                    
                     successMessageDiv.innerHTML = `
                 <span style="margin-right: 10px;">Product deleted successfully</span>
                 <button type="button" class="close" aria-label="Close" onclick="closeSuccessMessage(this)">
@@ -419,7 +413,7 @@ if ($success) {
                 </button>
             `;
 
-                    // Append the success message div to the body or another container element
+                   
                     container.appendChild(successMessageDiv);
                 })
                 .catch(error => console.error('Error fetching product data:', error));

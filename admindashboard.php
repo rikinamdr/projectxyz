@@ -1,17 +1,14 @@
 <?php
-// dashboard.php
 
-// Start the session
 session_start();
 
-// Check if the user is logged in
+
 if (!isset($_SESSION['user_id'])) {
     // Redirect to the login page if not logged in
     header("Location: index.php");
     exit();
 }
 
-// Now you can access session data
 $userID = $_SESSION['user_id'];
 $userName = $_SESSION['user_name'];
 ?>
@@ -77,35 +74,13 @@ $activeTab = isset($_GET['tab']) ? $_GET['tab'] : 'dashboards';
                             class="material-icons-outlined">add_shopping_cart</span> Purchase Orders
                     </a></li>
             </ul>
-
-            <!-- <ul class="sidebar-list tab">
-
-                <li class="sidebar-list-item tablinks active" onclick="openCity(event, 'dashboards')">
-                    <span class="material-icons-outlined ">dashboard</span> Dashboard
-                </li>
-                <li class="sidebar-list-item tablinks" onclick="openCity(event, 'Products')">
-                    <span class="material-icons-outlined">inventory_2</span> Products
-                </li>
-                <li class="sidebar-list-item tablinks" onclick="openCity(event, 'purchaseOrder')">
-                    <
-                </li>
-                <li class="sidebar-list-item">
-                    <span class="material-icons-outlined">shopping_cart</span> Sales Orders
-                </li>
-                <li class="sidebar-list-item">
-                    <span class="material-icons-outlined">poll</span> Reports
-                </li>
-                <li class="sidebar-list-item">
-                    <span class="material-icons-outlined">settings</span>Settings
-                </li>
-            </ul> -->
         </aside>
 
         <main class="main-container">
             <?php
             // Include the content based on the active tab
             $tabContentFile = $activeTab . '.php';
-            // print_r($tabContentFile);
+           
             if (file_exists($tabContentFile)) {
                 include($tabContentFile);
             } else {
