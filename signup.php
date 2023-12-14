@@ -2,6 +2,9 @@
 <?php 
 $success=$error = "";
 if($_POST){
+    global $conn;
+    require('dbconnect.php');
+
     $email = $_POST['email'];
     $fname = $_POST['fname'];
     $lname = $_POST['lname'];
@@ -12,12 +15,10 @@ if($_POST){
     if($password != $conformPassword){
             $error="Confirm password didnt match.";
     }else{
-       
-        require('dbconnect.php');
-
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-        $query = "INSERT INTO users (f_name, l_name,  email, password, address, phone) VALUES ('$fname','$lname', '$email', '$hashedPassword', '$address', '$ph_no')";    
+        $query = "INSERT INTO users (f_name, l_name,  email, password, address, phone) VALUES ('$fname','$lname', '$email', '$hashedPassword', '$address', '$ph_no')";
+
         $result = mysqli_query($conn, $query);
         if ($result) {
             $success=  "User data inserted successfully.";

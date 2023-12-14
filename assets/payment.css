@@ -107,15 +107,35 @@ img{
 .check{
     display: none;
 }
-.confirm{
-    padding-top: 20px;
+.confirm {
+    text-align: center;
+    margin-top: 20px;
 }
-button{
-    width: 100%;
+
+.confirm-button,
+.cancel-button {
+    padding: 10px 20px;
+    margin: 0 10px;
+}
+
+.confirm-button a,
+.cancel-button a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.confirm-button{
     border: none;
     background:rgb(144, 5, 123);
     color: #fff;
-    padding: 15px;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: all 0.35s ease;
+}
+.cancel-button{
+    border: none;
+    background: rgb(79, 70, 79);
+    color: #fff;
     border-radius: 4px;
     font-size: 16px;
     transition: all 0.35s ease;

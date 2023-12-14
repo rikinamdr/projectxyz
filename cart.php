@@ -50,7 +50,24 @@ if (isset($_POST['action']) && $_POST['action'] == "change") {
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"> -->
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.6.0/css/all.min.css">
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
 
+        th, td {
+            /*border: 1px solid #dddddd;*/
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            border-bottom: 2px solid #333; /* Adjust the color and size as needed */
+            text-align: left;
+        }
+
+    </style>
     <title>Cart Page</title>
 </head>
 
@@ -157,7 +174,10 @@ if (isset($_POST['action']) && $_POST['action'] == "change") {
                     ?>
                     <tr>
                         <td colspan="5" align="right">
-                            <strong>TOTAL: <?php echo "$" . $total_price; ?></strong>
+                            <strong>TOTAL:</strong>
+                        </td>
+                        <td  align="left">
+                            <strong><?php echo "$" . $total_price; ?></strong>
                         </td>
                     </tr>
                     <?php
