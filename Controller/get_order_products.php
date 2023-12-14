@@ -6,6 +6,7 @@ $sql = "";
 require('../dbconnect.php');
 
 $orderId = isset($_POST['order_id']) ? $_POST['order_id'] : null;
+
 $sql = "SELECT 
     orders.id AS order_id,
     orders.total_price,
