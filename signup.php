@@ -17,7 +17,7 @@ if($_POST){
     }else{
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-        $query = "INSERT INTO users (f_name, l_name,  email, password, address, phone) VALUES ('$fname','$lname', '$email', '$hashedPassword', '$address', '$ph_no')";
+        $query = "INSERT INTO customers (f_name, l_name,  email, password, address, phone) VALUES ('$fname','$lname', '$email', '$hashedPassword', '$address', '$ph_no')";
 
         $result = mysqli_query($conn, $query);
         if ($result) {

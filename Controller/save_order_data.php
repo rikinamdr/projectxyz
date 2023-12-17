@@ -93,7 +93,7 @@ if ($customerData['type'] == "add") {
                 
                 if ($customer) {
                     $customerId = $customer['id'];
-                    $currentDate = date("Y-m-d");
+                    $currentDate = date("Y-m-d");   
 
                     $cashOnDelivery = "Cash on Delivery";
                     $sql = "INSERT INTO orders (customer_id, total_price, payment_method, order_date)

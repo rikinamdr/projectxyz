@@ -420,10 +420,10 @@ if ($success) {
         }
     }
 
-    function closeSuccessMessage(button) {
-        const successMessageDiv = button.closest('.alert-success');
-        if (successMessageDiv) {
-            successMessageDiv.remove();
+        function closeSuccessMessage(button) {
+            const successMessageDiv = button.closest('.alert-success');
+            if (successMessageDiv) {
+                successMessageDiv.remove();
+            }
         }
-    }
 </script>

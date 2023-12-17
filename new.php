@@ -6,27 +6,27 @@ if ($_POST) {
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
     require('dbconnect.php');
-    $sql = "select * from customers where email = '$email'";
+    $sql = "select * from users where email = '$email'";
     $result = mysqli_query($conn, $sql);
     if ($result) {
-        // Check if a Customer with the entered email exists
+        // Check if a user with the entered email exists
         if (mysqli_num_rows($result) == 1) {
-            $customer = mysqli_fetch_assoc($result);
+            $user = mysqli_fetch_assoc($result);
 
             // Verify the entered password against the stored hashed password
-            if (password_verify($password, $customer['password'])) {
+            if (password_verify($password, $user['password'])) {
                 // Password is correct, create a session and redirect to a logged-in page
                 session_start();
-                $_SESSION['customer_id'] = $customer['id'];
-                $_SESSION['customer_name'] = $customer['f_name'] . " " . $customer['l_name'];
-                $_SESSION['email'] = $customer['email'];
-                header("Location: customerdashboard.php"); // Redirect to the dashboard or another logged-in page
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['user_name'] = $user['f_name'] . " " . $user['l_name'];
+                $_SESSION['email'] = $user['email'];
+                header("Location: admindashboard.php"); // Redirect to the dashboard or another logged-in page
                 exit();
             } else {
                 $errorMessage = "Incorrect email or password";
             }
         } else {
-            $errorMessage = "Customer not found with the entered email";
+            $errorMessage = "User not found with the entered email";
         }
 
         mysqli_free_result($result);
@@ -44,7 +44,7 @@ if ($_POST) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customer Log in</title>
+    <title>Log in</title>
     <link rel="stylesheet" href="assets/login.css">
     <link rel="stylesheet" href="assets/header.css">
 </head>
@@ -69,7 +69,7 @@ if ($_POST) {
         </div>
         <div class="content">
             <div class="form">
-                <h2>Customer Log In</h2>
+                <h2>Log In</h2>
                 <?php
                 if ($errorMessage) {
                     ?>
@@ -93,11 +93,7 @@ if ($_POST) {
                     </div>
                     <div class="input">
                         <p>Don't have account?<a href="signup.php">SIGN UP</a></p>
-                        <br><hr><br>
-                        <p>Log in as Admin?<a href="userlogin.php">LOG IN </a></p>
                     </div>
-                    
-                    
 
                 </form>
             </div>

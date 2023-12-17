@@ -1,5 +1,4 @@
 
-
 svg{
    width: 30px;
    color: #e1e1f3;
@@ -272,6 +271,9 @@ hr {
 }
 #staticBackdropLabel {
   font-weight: bold;
+}
+a .button1{
+  height: 100px;
 }
 /* responsive css */
 @media only screen and (max-width: 767px) {

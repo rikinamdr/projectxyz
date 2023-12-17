@@ -157,10 +157,11 @@ $products = getProducts();
                         </h4>
 
                     </div>
+                    <!-- <a href="description.php&product_id=<?/*php echo $product['id']; */?>"> <input type="button" class="button1" value="View" > </a> -->
+                    <a href="description.php?product_id=<?php echo $product['id']; ?>"><button type="button" class="default-btn border-radius-5">View</button></a>
 
-                    <button type="submit" class="default-btn border-radius-5"> Add to cart
-                    </button>
-                </form>
+                    <button type="submit" class="default-btn border-radius-5"> Add to cart</button>
+                </form> 
 
             </div>
         <?php endforeach; ?>

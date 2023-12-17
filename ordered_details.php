@@ -2,101 +2,112 @@
 global $conn;
 $error = $success = "";
 $sql = "";
-function getOrders()
-{
-    global $conn;
-    require('dbconnect.php');
-    $sql = "SELECT orders.*, customers.f_name as customer_name FROM orders JOIN customers ON orders.customer_id = customers.id order by created_at desc";
-    $result = $conn->query($sql);
+$order_id = $_GET['order_id'];
+// print_r($_GET['order_id']); die(123);
 
-    $orders = [];
 
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            $orders[] = $row;
+
+require('dbconnect.php');
+$sql = "SELECT 
+    orders.id AS order_id,
+    orders.total_price,
+    orders.order_date,
+    orders.status,
+    orders.delivery_date,
+    products.name,
+    products.image,
+    order_products.quantity,
+    order_products.price
+FROM 
+    orders
+JOIN 
+    order_products ON orders.id = order_products.order_id 
+JOIN 
+    products ON order_products.product_id = products.id 
+WHERE 
+    orders.id = $order_id";
+
+$result = mysqli_query($conn, $sql);
+$result = $conn->query($sql);
+
+$order = [];
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        // Append each product to the order array
+        $order['order_id'] = $row['order_id'];
+        $order['total_price'] = $row['total_price'];
+        $order['order_date'] = $row['order_date'];
+        $order['status'] = $row['status'];
+        $order['delivery_date'] = $row['delivery_date'];
+
+
+        // Check if the 'products' key is already present in $order
+        if (!isset($order['products'])) {
+            $order['products'] = [];
         }
+
+        // Append product details to the 'products' array
+        $order['products'][] = [
+            'image' => $row['image'],
+            'product_name' => $row['name'],
+            'quantity' => $row['quantity'],
+            'price' => $row['price']
+        ];
+
     }
 
-    return $orders;
 }
-$orders = getOrders();
 
-function getOrder($id)
-{
-    global $conn;
-    require('dbconnect.php');
-    $sql = "SELECT * FROM orders WHERE id = $id";
-    $result = mysqli_query($conn, $sql);
-
-    return ($result->num_rows > 0) ? $result->fetch_assoc() : null;
-}
 ?>
 
 
-<div id="message">
-    <?php
-    if ($error) {
-        ?>
-        <div class="error">
-            <?php echo $error; ?>
-        </div>
-        <?php
-    }
-    if ($success) {
-        ?>
-        <div class="success">
-            <?php echo $success ?>
-        </div>
-        <?php
-    }
-    ?>
-</div>
+
 <div id="jsonDataContainer">
-    <div id="message">
+    <div id="message">  
 
     </div>
-    <p><strong>Order ID:</strong> 14</p>
-    <p><strong>Order Date:</strong> 2023-12-07 00:00:00</p>
-    <p><strong>Total Price:</strong>  5000.00</p>
-    <p><strong>Order status:</strong> Pending</p>
-    Click on the button to deliver order:
-    <button class="deliver-button" data-id="14">Delivered</button>
+    <a class="text-primary" href="?tab=purchaseOrder" ><button id="close">Close</button></a>
+    <p><strong>Order ID:</strong>
+        <?php echo $order['order_id']; ?>
+    </p>
+    <p><strong>Order Date:</strong>
+        <?php echo $order['order_date']; ?>
+    </p>
+    <p><strong>Total Price:</strong>
+        <?php echo $order['total_price']; ?>
+    </p>
+    <p><strong>Order status:</strong>
+        <?php echo $order['status'] == 1 ? "Delivered" : "Pending"; ?>
+    </p>
+    <?php if ($order['status'] == 0) { ?>
+        Click on the button to deliver order:
+        <button class="deliver-button" onclick="deliverProduct(<?php echo $order['order_id']; ?>)">Delivered</button>
+    <?php } ?>
     <h2>Products</h2>
     <table class="product-table">
         <tr>
+            <th>Image</th>
             <th>Product Name</th>
             <th>Quantity</th>
             <th>Price</th>
         </tr>
-        <tr>
-            <td>Court shoes</td>
-            <td>2</td>
-            <td>$2500.00</td>
-        </tr>
+        <?php if ($order['products']) {
+            foreach ($order['products'] as $product) {
+                ?>
+                <tr>
+                    <td><img width="150px" height="100px" src="images/<?php echo $product['image'];?>"></td>
+                    <td><?php echo $product['product_name'];?></td>
+                    <td><?php echo $product['quantity'];?></td>
+                    <td><?php echo $product['price'];?></td>
+                </tr>
+
+            <?php }
+        }
+
+        ?>
     </table>
 </div>
-<div class="modal fade" id="orderDetailsPopup" #2196F3role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="jsonModalLabel">Order Details</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-
-                <!-- Container for displaying JSON data in the modal -->
-                <div id="jsonDataContainer">
-                    <!-- JSON data will be inserted here dynamically -->
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
+<div style="margin-bottom:100px"></div>
 
 <style>
     .cards {
@@ -162,129 +173,20 @@ function getOrder($id)
         border-color: #2196F3;
     }
 </style>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 <script>
 
-    function closeSuccessMessage(button) {
-        const successMessageDiv = button.closest('.alert');
-        if (successMessageDiv) {
-            successMessageDiv.remove();
+
+function deliverProduct(productId) {
+        if (confirm('Are you sure you want to deliver this product?')) {
+
+            fetch('Controller/change_order_status.php?id=' + productId)
+                .then(response => response.json())
+                .then(data => {
+                    location.reload(true);
+                })
+                .catch(error => console.error('Error fetching product data:', error));
         }
     }
 
-    $(document).ready(function () {
-        $('#orderDetailsPopup').modal('hide');
-        
-        $(".showOrderDetails").on("click", function (e) {
-            e.preventDefault();
-            // Get the order ID 
-            var orderId = $(this).attr('data-id');
-
-            // Make an AJAX request to fetch order details
-            $.ajax({
-                url: "Controller/get_order_products.php",
-                method: "POST",
-                data: { order_id: orderId },
-                dataType: "json",
-                success: function (response) {
-                    var jsonDataContainer = $('#jsonDataContainer');
-                    jsonDataContainer.empty();
-                    // Update the content of the popup with the order details
-                    displayOrderDetails((response));
-                    console.log(response);
-                    // Show the popup
-                    $('#orderDetailsPopup').modal('show');
-                    $(".deliver-button").on("click", function (e) {
-            e.preventDefault();
-            // Get the order ID 
-            var orderId = $(this).attr('data-id');
-
-            // Make an AJAX request to fetch order details
-            $.ajax({
-                url: "Controller/change_order_status.php",
-                method: "POST",
-                data: { orderId: orderId, status: 1 },
-                dataType: "json",
-                success: function (response) {
-                    console.log(response);
-                   
-                    $('#message').empty();
-                     // Display success message with a close button
-                     var successMessage = $('<div>').text('Order  has been delivered!').addClass('success-message');
-                        var closeButton = $('<button>').text('Close').addClass('close-button');
-                        $('#message').append(closeButton);
-                        $('#message').append(successMessage);
-                        location.reload();
-                },
-                error: function () {
-                    console.log("Error fetching order details.");
-                }
-            });
-        });
-                },
-                error: function () {
-                    console.log("Error fetching order details.");
-                }
-            });
-        });
-
-       
-
-        
-
-        function displayOrderDetails(orderDetails) {
-            var orderDetailsContainer = $('#jsonDataContainer');
-
-            // Clear previous content
-            orderDetailsContainer.empty();
-
-            orderDetailsContainer.append('<div id="message"></div>');
-
-            orderDetailsContainer.append('<p><strong>Order ID:</strong> ' + orderDetails.order_id + '</p>');
-            orderDetailsContainer.append('<p><strong>Order Date:</strong> ' + orderDetails.order_date + '</p>');
-            orderDetailsContainer.append('<p><strong>Total Price:</strong>  ' + parseFloat(orderDetails.total_price).toFixed(2) + '</p>');
-            
-            orderDetailsContainer.append('<p><strong>Order status:</strong> ' + (orderDetails.status == 1 ? 'Delivered' : 'Pending') + '</p>');
-            if(orderDetails.status == 1){
-                orderDetailsContainer.append('<p><strong>Delivery date:</strong> ' + orderDetails.delivery_date + '</p>');
-
-            }else{
-                var deliveredButton = $('<button>').text('Delivered').addClass('deliver-button').attr('data-id', orderDetails.order_id);
-                orderDetailsContainer.append("Click on the button to deliver order:");
-                orderDetailsContainer.append(deliveredButton);    
-            }
-
-                console.log('Pending');
-
-            
-            orderDetailsContainer.append('<h2>Products</h2>');
-            if (orderDetails.products && orderDetails.products.length > 0) {
-                var table = $('<table>').addClass('product-table');
-                var headerRow = $('<tr>').append(
-                    $('<th>').text('Product Name'),
-                    $('<th>').text('Quantity'),
-                    $('<th>').text('Price')
-                );
-                table.append(headerRow);
-
-                // Iterate through each product in the order
-                orderDetails.products.forEach(function (product) {
-                    var row = $('<tr>').append(
-                        $('<td>').text(product.product_name),
-                        $('<td>').text(product.quantity),
-                        $('<td>').text('$' + parseFloat(product.price).toFixed(2))
-                    );
-                    table.append(row);
-                });
-
-                orderDetailsContainer.append(table);
-            } else {
-                orderDetailsContainer.append('<p>No products found for this order.</p>');
-            }
-        }
-    });
 </script>

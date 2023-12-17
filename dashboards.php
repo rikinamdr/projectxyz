@@ -46,7 +46,7 @@
     </div>
 </div>
 
-<div id="Products" class="tabcontent">
+<!-- <div id="Products" class="tabcontent">
 
     <div class="main-title">
         <p class="font-weight-bold">PRODUCTS</p>
@@ -56,9 +56,9 @@
     <div class="main-cards">
 
     </div>
-</div>
+</div> -->
 
-<div id="purchaseOrder" class="tabcontent">
+<!-- <div id="purchaseOrder" class="tabcontent">
     <h3>purchaseOrder</h3>
     <p>Tokyo is the capital of Japan.</p>
 </div>
@@ -87,4 +87,4 @@
         <button type="submit">Add Product</button>
 
     </form>
-</div>
+</div> -->
