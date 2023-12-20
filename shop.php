@@ -8,7 +8,7 @@ if (isset($_POST['productId']) && $_POST['productId'] != "") {
     $productId = $_POST['productId'];
     $result = mysqli_query(
         $conn,
-        "SELECT * FROM `products` WHERE `id`=$productId"
+        "SELECT * FROM `products` WHERE `id`=$productId "
     );
     $row = mysqli_fetch_assoc($result);
 
@@ -54,7 +54,7 @@ if (isset($_POST['productId']) && $_POST['productId'] != "") {
 function getProducts()
 {
     global $conn;
-    $sql = "SELECT * FROM products";
+    $sql = "SELECT * FROM products WHERE is_deleted=0";
     $result = $conn->query($sql);
 
     $products = [];

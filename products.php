@@ -15,7 +15,7 @@ function getProducts()
 {
     global $conn;
     require('dbconnect.php');
-    $sql = "SELECT products.*, category.name as category_name FROM products JOIN category ON products.category_id = category.id order by created_at desc";
+    $sql = "SELECT products.*, category.name as category_name FROM products JOIN category ON products.category_id = category.id  WHERE products.is_deleted=0 order by created_at desc";
     $result = $conn->query($sql);
 
 

@@ -122,7 +122,7 @@ if ($result->num_rows > 0) {
 
             ?>
         </table>
-    <?php } ?>
+    <?php } ?>  
 </div>
 <div style="margin-bottom:100px"></div>
 

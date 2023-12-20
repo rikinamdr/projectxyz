@@ -33,7 +33,7 @@ if (isset($_POST['productId']) && $_POST['productId'] != "") {
 function getProducts()
 {
     global $conn;
-    $sql = "SELECT * FROM products";
+    $sql = "SELECT * FROM products WHERE is_deleted=0";
     $result = $conn->query($sql);
 
     $products = [];
