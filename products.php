@@ -27,6 +27,8 @@ function getProducts()
         }
     }
     return $products;
+
+
 }
 
 function getCategories()
@@ -65,7 +67,6 @@ function addUpdateProduct($post)
             // Get the details of the uploaded file
             $fileName = basename($_FILES['productImage']['name']);
             $targetPath = $uploadDirectory . $fileName;
-            $fileType = pathinfo($targetPath, PATHINFO_EXTENSION);
             // Check if the file is an image
             $isImage = getimagesize($_FILES['productImage']['tmp_name']);
             if ($isImage !== false) {
@@ -144,6 +145,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 }
 $products = getProducts();
+
+// print_r($products);die(1111);
 
 ?>
 <div id="message">
@@ -231,16 +234,16 @@ if ($success) {
 
 
 </div>
-<div id="addEditProductForm">
+<div id="addEditProductForm"  onsubmit="return validateForm()" novalidate >
     <form action="admindashboard.php?tab=products" method="post" id="productForm" enctype="multipart/form-data">
         <label for="productName">Product Name:</label>
-        <input type="text" id="productName" name="productName" required>
+        <input type="text" id="productName" name="productName" >
 
         <label for="productDescription">Product Description:</label>
-        <textarea id="productDescription" name="productDescription" rows="4" required></textarea>
+        <textarea id="productDescription" name="productDescription" rows="4" ></textarea>
 
         <label for="productPrice">Product Price:</label>
-        <input type="number" id="productPrice" name="productPrice" step="0.01" required>
+        <input type="number" id="productPrice" name="productPrice" step="0.01" >
 
 
         <label for="productCategory">Select a Shoes Category:</label>
@@ -253,7 +256,7 @@ if ($success) {
         </select>
 
         <label for="productQuantity">Quantity:</label>
-        <input type="number" id="productQuantity" name="productQuantity" required>
+        <input type="number" id="productQuantity" name="productQuantity" >
 
         <div id="appendedImageContainer"></div>
         <label for="productImage">Product Image :</label>
@@ -404,10 +407,15 @@ if ($success) {
                     successMessageDiv.classList.add('alert', 'alert-success', 'mt-3');
                     successMessageDiv.role = 'alert';
                     successMessageDiv.style.position = 'relative';
-
+                    
+                    if(data == 3){
+                        var message = "Product cannot be deleted";
+                    }else{
+                        var message ="product deleted successfully";
+                    }
                     
                     successMessageDiv.innerHTML = `
-                <span style="margin-right: 10px;">Product deleted successfully</span>
+                <span style="margin-right: 10px;">`+message+`</span>
                 <button type="button" class="close" aria-label="Close" onclick="closeSuccessMessage(this)">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -420,10 +428,11 @@ if ($success) {
         }
     }
 
-    function closeSuccessMessage(button) {
-        const successMessageDiv = button.closest('.alert-success');
-        if (successMessageDiv) {
-            successMessageDiv.remove();
+        function closeSuccessMessage(button) {
+            const successMessageDiv = button.closest('.alert-success');
+            if (successMessageDiv) {
+                successMessageDiv.remove();
+            }
         }
-    }
 </script>
+<script src="assets/products.js"></script>

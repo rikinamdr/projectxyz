@@ -1,41 +1,22 @@
-function toggleForm(formId) {
-    // Hide all forms
-    var forms = document.getElementsByClassName('form-group');
-    for (var i = 0; i < forms.length; i++) {
-        forms[i].style.display = 'none';
-    }
 
-    // Show the selected form
-    document.getElementById(formId).style.display = 'block';
-}
 
 function navigate(url){
-    window.location.href = url;
-}
-function navigatefromcheckout(url){
-    alert('Your order has been placed');
     window.location.href = url;
 }
 function validateForm1() {
     var email = document.getElementById('email').value;
     var password = document.getElementById('password').value;
-   
-    
-  
+
     // Simple validation: Check if fields are not empty
     if ( email === '' || password === '' ) {
       alert('Please fill out all fields');
       return false; // Prevent the form from submitting
     }
-
-  
-   
-  
     // If the form passes validation, it will be submitted
     return true;
   }
 
-  function validateForm() {
+  function validateForm2() {
     var firstName = document.getElementById('firstName').value;
     var lastName = document.getElementById('lastName').value;
     var email = document.getElementById('email').value;

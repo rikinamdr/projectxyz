@@ -5,7 +5,7 @@ session_start();
 
 if (!isset($_SESSION['user_id'])) {
     // Redirect to the login page if not logged in
-    header("Location: index.php");
+    header("Location: userlogin.php");
     exit();
 }
 
@@ -36,17 +36,7 @@ $activeTab = isset($_GET['tab']) ? $_GET['tab'] : 'dashboards';
 <body>
     <div class="grid-container">
         <header class="header">
-            <div class="menu-icon" onclick="openSidebar()">
-                <span class="material-icons-outlined">menu</span>
-            </div>
-            <div class="header-left">
-                <span class="material-icons-outlined">search</span>
-            </div>
-            <div class="header-right">
-                <span class="material-icons-outlined">notifications</span>
-                <span class="material-icons-outlined">email</span>
-                <span class="material-icons-outlined">account_circle</span>
-            </div>
+
         </header>
 
         <aside id="sidebar">
@@ -58,29 +48,42 @@ $activeTab = isset($_GET['tab']) ? $_GET['tab'] : 'dashboards';
                 <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
             </div>
             <ul class="sidebar-list tab">
-                <li class="sidebar-list-item tablinks <?php echo ($activeTab == 'dashboards') ? 'active' : ''; ?>"><a class="text-primary" href="?tab=dashboards" ><span
+                <li class="sidebar-list-item tablinks <?php echo ($activeTab == 'dashboards') ? 'active' : ''; ?>"><a
+                        class="text-primary" href="?tab=dashboards"><span
                             class="material-icons-outlined ">dashboard</span> Dashboard</a></li>
-                <li class="sidebar-list-item tablinks <?php echo ($activeTab == 'categories') ? 'active' : ''; ?>"><a class="text-primary" href="?tab=categories"><span
-                                class="material-icons-outlined">add_shopping_cart</span> Category</a></li>
-                <li class="sidebar-list-item tablinks <?php echo ($activeTab == 'products') ? 'active' : ''; ?>"><a class="text-primary" href="?tab=products" ><span
+                <li class="sidebar-list-item tablinks <?php echo ($activeTab == 'categories') ? 'active' : ''; ?>"><a
+                        class="text-primary" href="?tab=categories"><span
+                            class="material-icons-outlined">category</span> Category</a></li>
+                <li class="sidebar-list-item tablinks <?php echo ($activeTab == 'products') ? 'active' : ''; ?>"><a
+                        class="text-primary" href="?tab=products"><span
                             class="material-icons-outlined">inventory_2</span> Products</a></li>
-                <li class="sidebar-list-item tablinks <?php echo ($activeTab == 'customers') ? 'active' : ''; ?>"><a class="text-primary" href="?tab=customers"><span
-                            class="material-icons-outlined">add_shopping_cart</span> Customer</a></li>
+                <li class="sidebar-list-item tablinks <?php echo ($activeTab == 'customers') ? 'active' : ''; ?>"><a
+                        class="text-primary" href="?tab=customers"><span
+                            class="material-icons-outlined">group</span> Customer</a></li>
 
-                <li class="sidebar-list-item tablinks <?php echo ($activeTab == 'admins') ? 'active' : ''; ?>"><a class="text-primary" href="?tab=admins"><span
-                            class="material-icons-outlined">add_shopping_cart</span> Admins</a></li>
-                    
-                <li class="sidebar-list-item tablinks <?php echo ($activeTab == 'purchaseOrder') ? 'active' : ''; ?>"><a class="text-primary" href="?tab=purchaseOrder"><span
+                <li class="sidebar-list-item tablinks <?php echo ($activeTab == 'admins') ? 'active' : ''; ?>"><a
+                        class="text-primary" href="?tab=admins"><span
+                            class="material-icons-outlined">person_add</span> Admins</a></li>
+
+                <li class="sidebar-list-item tablinks <?php echo ($activeTab == 'purchaseOrder') ? 'active' : ''; ?>"><a
+                        class="text-primary" href="?tab=purchaseOrder"><span
                             class="material-icons-outlined">add_shopping_cart</span> Purchase Orders
                     </a></li>
             </ul>
+            <div class="logout">
+                <li class="sidebar-list-item">
+                    <a href="logout.php">
+                    Log Out
+                    </a>
+                </li>
+            </div>
         </aside>
 
         <main class="main-container">
             <?php
             // Include the content based on the active tab
             $tabContentFile = $activeTab . '.php';
-           
+
             if (file_exists($tabContentFile)) {
                 include($tabContentFile);
             } else {
@@ -89,7 +92,7 @@ $activeTab = isset($_GET['tab']) ? $_GET['tab'] : 'dashboards';
             ?>
 
             <script src="assets/admin.js"></script>
-
+    </div>
 
 </body>
 

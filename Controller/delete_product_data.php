@@ -6,11 +6,13 @@ $sql = "";
 require('../dbconnect.php');
 
 
+
+
 $productId = isset($_GET['id']) ? $_GET['id'] : null;
 
-$sql = "DELETE FROM products WHERE id=$productId";
+
+$sql = "UPDATE products SET is_deleted=1 WHERE id=$productId";
 $result = mysqli_query($conn, $sql);
-
-echo $result
-
+//print_r($sql);die('11222');
+echo $result;
 ?>

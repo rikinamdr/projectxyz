@@ -397,3 +397,9 @@ th {
     background-color: #f44336; /* Red */
     color: white;
 }
+.logout {
+    vertical-align: middle;
+    line-height: 1px;
+    padding-top: 300px;
+    color: #f2f2f2;
+}

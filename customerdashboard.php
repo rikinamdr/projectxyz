@@ -1,60 +1,79 @@
+<?php
+
+session_start();
+
+
+if (!isset($_SESSION['customer_id'])) {
+    // Redirect to the login page if not logged in
+    header("Location: index.php");
+    exit();
+}
+
+$customerID = $_SESSION['customer_id'];
+$customerName = $_SESSION['customer_name'];
+?>
+<?php
+$activeTab = isset($_GET['tab']) ? $_GET['tab'] : 'dash';
+?>
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-5">
-        <meta name="viewport" content="width=device-width,initial-scale=1.0">
-        <title>customerdashboard</title>
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-        <link rel="stylesheet" href="assets/header.css">
-        <link rel="stylesheet" href="assets/customerdashboard.css">
-    </head>
-    <body>
-        <header class="header">
-            <a href="#" class="logo">XYZshoe</a>
-            <div class="navbar">
-                <a href="home.html">HOME</a>
-                <a href="login.html">LOG IN</a>
-                <a href="shop.html">SHOP</a>
-                <a href="contactus.html">CONTACT</a>
-                <a href="aboutus.html">ABOUT US</a>
-            </div>
-            <div class="navbar-icon" onclick="toggleNavbar()">
-                <i class="bi bi-list"></i>
-            </div>
-        </header>
-    
-        <script>
-            function toggleNavbar() {
-                var navbar = document.querySelector('.navbar');
-                navbar.classList.toggle('show');
-            }
-        </script>
+
+<head>
+    <meta charset="utf-5">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>customerdashboard</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <link rel="stylesheet" href="assets/customerdashboard.css">
+
+<body>
+    <div class="grid-container">
         <aside id="sidebar">
             <div class="sidebar-title">
                 <div class="sidebar-brand">
-                    <span class="material-icons-outlined">account_circle</span>Jenisha
+                    <span class="material-icons-outlined">account_circle</span>
+                    <?php echo $customerName; ?>
                 </div>
                 <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
             </div>
 
             <ul class="sidebar-list">
                 <li class="sidebar-list-item">
-                    <span class="material-icons-outlined">dashboard</span> Dashboard
+                    <span
+                        class="material-icons-outlined <?php echo ($activeTab == 'dash') ? 'active' : ''; ?>">dashboard</span><a
+                        class="text-primary" href="?tab=dash"> Dashboard</a>
                 </li>
+
                 <li class="sidebar-list-item">
-                    <span class="material-icons-outlined">reorder</span> Orders
+                    <span
+                        class="material-icons-outlined <?php echo ($activeTab == 'customer_history') ? 'active' : ''; ?>">history</span><a
+                        class="text-primary"
+                        href="?tab=customer_history&customer_id=<?php echo $customerID; ?>">History</a>
                 </li>
-                <li class="sidebar-list-item">
-                    <span class="material-icons-outlined">history</span> History
-                </li>
-                <li class="sidebar-list-item">
-                    <span class="material-icons-outlined">poll</span> Reports
-                </li>
-                <li class="sidebar-list-item">
-                    <span class="material-icons-outlined">settings</span>Settings
-                </li>
+
             </ul>
+            <div class="logout">
+                <li class="sidebar-list-item">
+                    <a href="logout.php">
+                        Log Out
+                    </a>
+                </li>
+            </div>
+
         </aside>
-        
-    </body>
+        <main class="main-container">
+            <?php
+            // Include the content based on the active tab
+            $tabContentFile = $activeTab . '.php';
+
+            if (file_exists($tabContentFile)) {
+                include($tabContentFile);
+            } else {
+                echo 'File not found for tab: ' . $activeTab;
+            }
+            ?>
+
+            <script src="assets/admin.js"></script>
+    </div>
+
+
+</body>

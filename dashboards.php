@@ -22,14 +22,14 @@
         <div class="card">
             <div class="card-inner">
                 <a class="text-primary" href="admindashboard.php?tab=categories">CATEGORY</a>
-                <span class="material-icons-outlined text-orange">add_shopping_cart</span>
+                <span class="material-icons-outlined text-orange">category</span>
             </div>
             
         </div>
         <div class="card">
             <div class="card-inner">
                 <a class="text-primary" href="admindashboard.php?tab=customers">CUSTOMERS</a>
-                <span class="material-icons-outlined text-orange">add_shopping_cart</span>
+                <span class="material-icons-outlined text-orange">group</span>
             </div>
             
         </div>
@@ -37,7 +37,7 @@
         <div class="card">
             <div class="card-inner">
                 <a class="text-primary" href="admindashboard.php?tab=admins">ADMIN</a>
-                <span class="material-icons-outlined text-orange">add_shopping_cart</span>
+                <span class="material-icons-outlined text-orange">person_add</span>
             </div>
             
         </div>
@@ -46,7 +46,7 @@
     </div>
 </div>
 
-<div id="Products" class="tabcontent">
+<!-- <div id="Products" class="tabcontent">
 
     <div class="main-title">
         <p class="font-weight-bold">PRODUCTS</p>
@@ -56,9 +56,9 @@
     <div class="main-cards">
 
     </div>
-</div>
+</div> -->
 
-<div id="purchaseOrder" class="tabcontent">
+<!-- <div id="purchaseOrder" class="tabcontent">
     <h3>purchaseOrder</h3>
     <p>Tokyo is the capital of Japan.</p>
 </div>
@@ -87,4 +87,4 @@
         <button type="submit">Add Product</button>
 
     </form>
-</div>
+</div> -->

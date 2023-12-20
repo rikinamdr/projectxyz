@@ -45,6 +45,7 @@ if ($message) {
         //     $message = 'Password and Confirm password does not match';
         // } else {
             $sql = "SELECT * FROM category where name='$name'";
+
             $result = $conn->query($sql);
 
             $category = [];
@@ -53,10 +54,8 @@ if ($message) {
                 $success = false;
                 $message = 'This category already exits in our system.';
             } else {
-               
                 $sql = "INSERT INTO category (name, description)
          VALUES ('$name', '$description')";
-
                 $result = mysqli_query($conn, $sql);
                 if ($result) {
                     $success = true;

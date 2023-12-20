@@ -163,7 +163,7 @@ $users = getUsers();
 
 </div>
 <div id="addEditUserForm">
-    <form id="userForm" enctype="multipart/form-data">
+    <form id="userForm" enctype="multipart/form-data" onsubmit="return validateForm()">
         <label for="firstname">First Name:</label>
         <input type="text" id="firstname" name="f_name" required>
 
@@ -398,3 +398,4 @@ $users = getUsers();
         }
     }
 </script>
+</script src="admin.js"></script>
