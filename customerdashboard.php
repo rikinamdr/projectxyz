@@ -5,7 +5,7 @@ session_start();
 
 if (!isset($_SESSION['customer_id'])) {
     // Redirect to the login page if not logged in
-    header("Location: userlogin.php");
+    header("Location: index.php");
     exit();
 }
 
@@ -38,23 +38,33 @@ $activeTab = isset($_GET['tab']) ? $_GET['tab'] : 'dash';
 
             <ul class="sidebar-list">
                 <li class="sidebar-list-item">
-                    <span class="material-icons-outlined <?php echo ($activeTab == 'dash') ? 'active' : ''; ?>">dashboard</span><a class="text-primary" href="?tab=dash" > Dashboard</a>
+                    <span
+                        class="material-icons-outlined <?php echo ($activeTab == 'dash') ? 'active' : ''; ?>">dashboard</span><a
+                        class="text-primary" href="?tab=dash"> Dashboard</a>
                 </li>
 
                 <li class="sidebar-list-item">
-                    <span class="material-icons-outlined <?php echo ($activeTab == 'customer_history') ? 'active' : ''; ?>">history</span><a class="text-primary" href="?tab=customer_history&customer_id=<?php echo $customerID; ?>" >History</a>
+                    <span
+                        class="material-icons-outlined <?php echo ($activeTab == 'customer_history') ? 'active' : ''; ?>">history</span><a
+                        class="text-primary"
+                        href="?tab=customer_history&customer_id=<?php echo $customerID; ?>">History</a>
                 </li>
 
             </ul>
             <div class="logout">
-                <a href="logout.php"> <input type="button" value="LOG OUT"></a>
+                <li class="sidebar-list-item">
+                    <a href="logout.php">
+                        Log Out
+                    </a>
+                </li>
             </div>
+
         </aside>
         <main class="main-container">
             <?php
             // Include the content based on the active tab
             $tabContentFile = $activeTab . '.php';
-           
+
             if (file_exists($tabContentFile)) {
                 include($tabContentFile);
             } else {
@@ -64,6 +74,6 @@ $activeTab = isset($_GET['tab']) ? $_GET['tab'] : 'dash';
 
             <script src="assets/admin.js"></script>
     </div>
-    
+
 
 </body>

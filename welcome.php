@@ -47,6 +47,19 @@ function getProducts()
 }
 
 $products = getProducts();
+
+function trimDescription($description, $maxWords = 100) {
+    $words = explode(' ', $description);
+    $trimmedWords = array_slice($words, 0, $maxWords);
+    $trimmedDescription = implode(' ', $trimmedWords);
+
+    // Add ellipsis if there are more words in the original description
+    if (count($words) > $maxWords) {
+        $trimmedDescription .= '...';
+    }
+
+    return $trimmedDescription;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -163,7 +176,7 @@ $products = getProducts();
                             </h5>
 
                             <h4>
-                                <?php echo $product['description']; ?>
+                            <?php echo trimDescription($product['description'],2); ?>
                             </h4>
                             <h4>Rs.
                                 <?php echo $product['price']; ?>
@@ -171,8 +184,8 @@ $products = getProducts();
 
                         </div>
 
-                        <button type="submit" class="default-btn border-radius-5"> Add to cart
-                        </button>
+                        <!-- <button type="submit" class="default-btn border-radius-5"> Add to cart
+                        </button> -->
                     </form>
 
                 </div>

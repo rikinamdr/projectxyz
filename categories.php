@@ -160,7 +160,7 @@ $category = getCategory();
 
 </div>
 <div id="addEditCategoryForm">
-    <form id="categoryForm" enctype="multipart/form-data">
+    <form id="categoryForm" enctype="multipart/form-data" onsubmit="return validateForm()">
         <label for="name">Name:</label>
         <input type="text" id="name" name="name" required>
 
@@ -383,3 +383,4 @@ $category = getCategory();
         }
     }
 </script>
+<script src="assets/catagory.php"></script>

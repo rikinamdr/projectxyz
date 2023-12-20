@@ -47,6 +47,7 @@ $order = getOrderDetails($orderId);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/shoppingcart.css">
+    <link rel="stylesheet" href="assets/thankyou.css">
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.6.0/css/all.min.css">
@@ -110,7 +111,7 @@ $order = getOrderDetails($orderId);
     <h1>Thank You for Shopping with Us !</h1>
 
     <div class="thank-you-message">
-        <p><?php echo $order['f_name']." ".$order['f_name']; ?>,Your order has been successfully placed.</p>
+        <p><?php echo $order['f_name']." ".$order['l_name']; ?>,Your order has been successfully placed.</p>
     </div>
 
     <div class="order-summary">
@@ -142,7 +143,7 @@ $order = getOrderDetails($orderId);
         echo "</div>";
         ?>
     </div>
-    <a href="shop.php"> <button class="cancel-button"  value="cancel">Cancel</button></a>
+    <a href="shop.php"> <button class="shopagain" >Shop again</button></a>
 
 </div>
 

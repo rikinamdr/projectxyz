@@ -108,7 +108,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <label for="card" class="cardMethod">
                 <div class="imgname">
                     <div class="imgcontainer card">
-                        <img src="assets/visa.png" alt="">
+                        <img src="images/visa.png" alt="">
                     </div>
                     <span class="name">Credit Card</span>
                 </div>
@@ -117,7 +117,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <label for="cash" class="cashMethod">
                 <div class="imgname">
                     <div class="imgcontainer cash">
-                        <img src="assets/cash.png" alt="">
+                        <img src="images/cash.png" alt="">
                     </div>
                     <span class="name">Cash on Delivery</span>
                 </div>
@@ -126,7 +126,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <label for="paypal" class="paypalMethod">
                 <div class="imgname">
                     <div class="imgcontainer paypal">
-                        <img src="assets/paypal.png" alt="">
+                        <img src="images/paypal.png" alt="">
                     </div>
                     <span class="name">Paypal</span>
                 </div>
@@ -135,7 +135,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <label for="esewa" class="esewaMethod">
                 <div class="imgname">
                     <div class="imgcontainer esewa">
-                        <img src="assets/esewa.png" alt="">
+                        <img src="images/esewa.png" alt="">
                     </div>
                     <span class="name">Esewa</span>
                 </div>
@@ -184,9 +184,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             // Append the hidden input to the form
             document.forms["paymentForm"].appendChild(hiddenInput);
 
-            // Your additional logic for Confirm button click goes here
-            // alert("Form is valid. Additional logic for Confirm button click goes here.");
-            // Uncomment the line below if you want to submit the form programmatically
+            
             document.forms["paymentForm"].submit();
         }
     }

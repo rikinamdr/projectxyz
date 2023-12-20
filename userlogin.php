@@ -47,9 +47,12 @@ if ($_POST) {
     <title>Log in</title>
     <link rel="stylesheet" href="assets/login.css">
     <link rel="stylesheet" href="assets/header.css">
+
 </head>
 
+
 <body>
+
     <header class="header">
         <a href="#" class="logo">XYZshoe</a>
 
@@ -60,7 +63,7 @@ if ($_POST) {
             <a href="contactus.php">CONTACT</a>
             <a href="aboutus.php">ABOUT US</a>
         </nav>
-        
+
 
     </header>
     <section>
@@ -69,7 +72,7 @@ if ($_POST) {
         </div>
         <div class="content">
             <div class="form">
-                <h2>Log In</h2>
+                <h2>Admin Log In</h2>
                 <?php
                 if ($errorMessage) {
                     ?>
@@ -79,28 +82,30 @@ if ($_POST) {
                     <?php
                 }
                 ?>
-                <form method="post" action="index.php">
+                <form method="post" action="userlogin.php" onsubmit="return validateForm()">
                     <div class="input">
                         <span>E-mail</span>
-                        <input type="email" name="email">
+                        <input type="email" name="email" id="email">
+                        <span id="emailError" class="error-message"></span>
                     </div>
+
                     <div class="input">
                         <span>Password</span>
-                        <input type="password" name="password">
+                        <input type="password" name="password" id="password">
+                        <span id="passwordError" class="error-message"></span>
                     </div>
+
                     <div class="input">
                         <input type="submit" value="LOG IN" name="submit">
                     </div>
-                    <!-- <div class="input">
-                        <p>Don't have account?<a href="signup.php">SIGN UP</a></p>
-                    </div> -->
-
                 </form>
+
             </div>
         </div>
     </section>
 
 
 </body>
+<script src="assets/userlogin.js"> </script>
 
 </html>

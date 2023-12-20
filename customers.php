@@ -6,7 +6,7 @@ function getCustomers()
 {
     global $conn;
     require('dbconnect.php');
-    $sql = "SELECT * FROM customers order by id desc";
+    $sql = "SELECT * FROM customers WHERE is_deleted=0 order by id desc";
     $result = $conn->query($sql);
 
     $customers = [];
@@ -27,6 +27,7 @@ $customers = getCustomers();
 
 
 <div id="message">
+</div>
     
 <?php
 if ($error) {
@@ -165,16 +166,24 @@ if ($success) {
                 .then(response => response.json())
                 .then(data => {
             
-            var container = document.getElementById('message');
+                    var container = document.getElementById('message');
                
-                    document.getElementById("table-"+customerId).remove();
+                    //document.getElementById("table-"+customerId).remove();
                     const successMessageDiv = document.createElement('div');
-                    successMessageDiv.classList.add('alert', 'alert-success', 'mt-3');
+                    
+                    
+                    console.log(data);
+                    if(data == 3){
+                        successMessageDiv.classList.add('alert', 'alert-error', 'mt-3');
+                        var message = "Customer cannot be deleted";
+                    }else{
+                        successMessageDiv.classList.add('alert', 'alert-success', 'mt-3');
+                        var message ="Customer deleted successfully";
+                    }
                     successMessageDiv.role = 'alert';
                     successMessageDiv.style.position = 'relative';
-
                     successMessageDiv.innerHTML = `
-                <span style="margin-right: 10px;">Customer deleted successfully</span>
+                <span style="margin-right: 10px;">`+message+`</span>
                 <button type="button" class="close" aria-label="Close" onclick="closeSuccessMessage(this)">
                     <span aria-hidden="true">&times;</span>
                 </button>

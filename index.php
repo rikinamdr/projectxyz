@@ -25,9 +25,10 @@ if ($_POST) {
             } else {
                 $errorMessage = "Incorrect email or password";
             }
-        } else {
-            $errorMessage = "Customer not found with the entered email";
         }
+        //  else {
+        //     $errorMessage = "Customer not found with the entered email";
+        // }
 
         mysqli_free_result($result);
     } else {
@@ -47,6 +48,7 @@ if ($_POST) {
     <title>Customer Log in</title>
     <link rel="stylesheet" href="assets/login.css">
     <link rel="stylesheet" href="assets/header.css">
+    
 </head>
 
 <body>
@@ -79,14 +81,18 @@ if ($_POST) {
                     <?php
                 }
                 ?>
-                <form method="post" action="index.php">
+                <form method="post" action="index.php" onsubmit="return validateForm()">
                     <div class="input">
                         <span>E-mail</span>
                         <input type="email" name="email">
+                        <span id="emailError" class="error-message"></span>
+
                     </div>
                     <div class="input">
                         <span>Password</span>
                         <input type="password" name="password">
+                        <span id="passwordError" class="error-message"></span>
+
                     </div>
                     <div class="input">
                         <input type="submit" value="LOG IN" name="submit">
@@ -106,5 +112,6 @@ if ($_POST) {
 
 
 </body>
+<script src="assets/login.js"></script>
 
 </html>

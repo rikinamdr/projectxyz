@@ -8,7 +8,6 @@ $order_id = $_GET['order_id'];
 
 
 require('dbconnect.php');
-$sqlQuery = "Select * FROM orders WHERE id=$order_id";
 $sql = "SELECT 
     orders.id AS order_id,
     orders.total_price,
@@ -30,13 +29,10 @@ WHERE
 
 $result = mysqli_query($conn, $sql);
 $result = $conn->query($sql);
-// print_r($result->num_rows); die("111111");
-$message = "";
+
 $order = [];
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
-        // print_r($row); die("111111");
-
         // Append each product to the order array
         $order['order_id'] = $row['order_id'];
         $order['total_price'] = $row['total_price'];
@@ -60,8 +56,6 @@ if ($result->num_rows > 0) {
 
     }
 
-} else {
-    $message = "Order not found.";
 }
 
 ?>
@@ -69,60 +63,45 @@ if ($result->num_rows > 0) {
 
 
 <div id="jsonDataContainer">
-    <div id="message">
+    <div id="message">  
 
     </div>
-    <?php if ($message) {
-        echo $message;
+    <a class="text-primary" href="?tab=customer_history" ><button id="close">Close</button></a>
+    <p><strong>Order ID:</strong>
+        <?php echo $order['order_id']; ?>
+    </p>
+    <p><strong>Order Date:</strong>
+        <?php echo $order['order_date']; ?>
+    </p>
+    <p><strong>Total Price:</strong>
+        <?php echo $order['total_price']; ?>
+    </p>
+    <p><strong>Order status:</strong>
+        <?php echo $order['status'] == 1 ? "Delivered" : "Pending"; ?>
+    </p>
+    <h2>Products</h2>
+    <table class="product-table">
+        <tr>
+            <th>Image</th>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Price</th>
+        </tr>
+        <?php if ($order['products']) {
+            foreach ($order['products'] as $product) {
+                ?>
+                <tr>
+                    <td><img width="150px" height="100px" src="images/<?php echo $product['image'];?>"></td>
+                    <td><?php echo $product['product_name'];?></td>
+                    <td><?php echo $product['quantity'];?></td>
+                    <td><?php echo $product['price'];?></td>
+                </tr>
 
-    } else { ?>
-        <a class="text-primary" href="?tab=purchaseOrder"><button id="close">Close</button></a>
-        <p><strong>Order ID:</strong>
-            <?php echo $order['order_id']; ?>
-        </p>
-        <p><strong>Order Date:</strong>
-            <?php echo $order['order_date']; ?>
-        </p>
-        <p><strong>Total Price:</strong>
-            <?php echo $order['total_price']; ?>
-        </p>
-        <p><strong>Order status:</strong>
-            <?php echo $order['status'] == 1 ? "Delivered" : "Pending"; ?>
-        </p>
-        <?php if ($order['status'] == 0) { ?>
-            Click on the button to deliver order:
-            <button class="deliver-button" onclick="deliverProduct(<?php echo $order['order_id']; ?>)">Delivered</button>
-        <?php } ?>
-        <h2>Products</h2>
-        <table class="product-table">
-            <tr>
-                <th>Image</th>
-                <th>Product Name</th>
-                <th>Quantity</th>
-                <th>Price</th>
-            </tr>
-            <?php if ($order['products']) {
-                foreach ($order['products'] as $product) {
-                    ?>
-                    <tr>
-                        <td><img width="150px" height="100px" src="images/<?php echo $product['image']; ?>"></td>
-                        <td>
-                            <?php echo $product['product_name']; ?>
-                        </td>
-                        <td>
-                            <?php echo $product['quantity']; ?>
-                        </td>
-                        <td>
-                            <?php echo $product['price']; ?>
-                        </td>
-                    </tr>
+            <?php }
+        }
 
-                <?php }
-            }
-
-            ?>
-        </table>
-    <?php } ?>
+        ?>
+    </table>
 </div>
 <div style="margin-bottom:100px"></div>
 
@@ -194,7 +173,7 @@ if ($result->num_rows > 0) {
 <script>
 
 
-    function deliverProduct(productId) {
+function deliverProduct(productId) {
         if (confirm('Are you sure you want to deliver this product?')) {
 
             fetch('Controller/change_order_status.php?id=' + productId)

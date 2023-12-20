@@ -70,6 +70,7 @@ if ($result->num_rows > 0) {
     }
 
 }
+// print_r($products); die("111");
 
 
 ?>
@@ -125,7 +126,7 @@ if ($result->num_rows > 0) {
 
         <div class="row">
             <div class="col-2">
-                <img src="images/heels1.jpg" width="100%" alt="Product Image">
+                <img src="images/products/<?php echo $products['image']; ?>" width="100%" alt="Product Image">
             </div>
             <div class="col-2">
                 <div class="message_box" style="margin-bottom: 30px; margin-top: -32px;">
@@ -145,26 +146,18 @@ if ($result->num_rows > 0) {
                     Rs: <?php echo $products['price'] ?>
 
                 </h3>
-
-                <!-- <label for="productSize">Size</label>
-                <select id="productSize" name="productSize">
-                    <option value="small">Small</option>
-                    <option value="medium">Medium</option>
-                    <option value="large">Large</option>
-                </select> -->
                 <br><br>
-                <label for="quantity">Quantity</label><br><br>
-                <input type="number" disabled width="500px" id="quantity" value="<?php echo $products['quantity'] ?>"><br>
+               
                 <br/>
                 <h3>Product details</h3>
                 <br>
-                <p>
+                <p style="line-height: 1.2em !important;">
                     <?php echo $products['description'] ?>
                 </p>
                 <form action="" method="post">
                     <input type='hidden' name='productId' value="<?php echo $products['id']; ?>" />
                     <button type="submit" class="btn">Add to cart</button>
-                </form>
+                </form> 
             </div>
         </div>
     </div>

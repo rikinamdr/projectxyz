@@ -9,8 +9,7 @@ $signUpFirstNameErr = $signUpLastNameErr = $signUpEmailErr = $signUpPasswordErr 
 $signInEmailErr = $signInPasswordErr = "";
 $errorMessage = '';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-    if ($_POST['signUpFirstName']) {
+    if(isset($_POST['signUpFirstName'])) {
         $signUpFirstName = $_POST['signUpFirstName'];
         $signUpLastName = $_POST['signUpLastName'];
         $signUpEmail = $_POST['signUpEmail'];
@@ -161,6 +160,9 @@ function test_input($data)
             background-color: #f4f4f4;
         }
 
+        .form-header{
+            padding-top: 60px !important;
+        }
         .container {
             display: flex;
             width: 850px;
@@ -224,11 +226,12 @@ function test_input($data)
 <header class="header">
     <a href="#" class="logo">XYZshoe</a>
     <nav class="navbar">
-        <a href="home.html">HOME</a>
-        <a href="login.html">LOG IN</a>
-        <a href="shop.html">SHOP</a>
-        <a href="contactus.html">CONTACT</a>
-        <a href="aboutus.html">ABOUT US</a>
+        <a href="welcome.php">HOME</a>
+        <a href="index.php">LOG IN</a>
+        <a href="shop.php">SHOP</a>
+        <a href="contactus.php">CONTACT</a>
+        <a href="aboutus.php">ABOUT US</a>
+
     </nav>
 </header>
 <div class="container">
@@ -240,14 +243,14 @@ function test_input($data)
     <div class="left-side">
         <div class="shipping">
             <form id="form1" class="form-container" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>"
-               method="post" class="form-container">
-                <h2>Already have an shipping account</h2>
+               method="post" class="form-container" onsubmit="return validateForm1()" novalidate>
+                <h2 class="form-header">Already have an shipping account</h2>
                 <label for="email1">Enter your Email address:</label>
-                <input type="email" id="signInEmail" class="email" name="signInEmail" required>
+                <input type="email" id="signInEmail" class="email" name="signInEmail" >
                 <span class="error"> <?php echo $signInEmailErr; ?></span>
 
                 <label for="password1">Enter your Password:</label>
-                <input type="password" id="signInPassword" name="signInPassword" class="password" required>
+                <input type="password" id="signInPassword" name="signInPassword" class="password" >
                 <span class="error"> <?php echo $signInPasswordErr; ?></span>
 
                 <button class="action-btn" style="width: 50%" type="submit" value="signIn">Sign In</button>
@@ -255,33 +258,33 @@ function test_input($data)
         </div>
     </div>
 
-    <div class="right-side">
+    <div class="right-side" novalidate>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" id="accountForm"
-              class="form-container">
-            <h2>Create new shipping account</h2>
+              class="form-container" onsubmit="return validateForm2()">
+            <h2 class="form-header">Create new shipping account</h2>
             <label for="firstName">First Name:</label>
             <input type="text" placeholder="First Name" name="signUpFirstName" id="signUpFirstName" class="form2"
-                   value="<?php echo htmlspecialchars($signUpFirstName); ?>" required>
+                   value="<?php echo htmlspecialchars($signUpFirstName); ?>" >
             <span class="error"><?php echo $signUpFirstNameErr; ?></span>
 
             <label for="lastName">Last Name:</label>
             <input type="text" placeholder="Last Name" name="signUpLastName" id="signUpLastName" class="form2"
-                   value="<?php echo htmlspecialchars($signUpLastName); ?>" required>
+                   value="<?php echo htmlspecialchars($signUpLastName); ?>" >
             <span class="error"><?php echo $signUpLastNameErr; ?></span>
 
             <label for="email2">Email Address:</label>
             <input type="email" placeholder="Email Address" id="signUpEmail" name="signUpEmail" class="form2"
-                   value="<?php echo htmlspecialchars($signUpEmail); ?>" required>
+                   value="<?php echo htmlspecialchars($signUpEmail); ?>" >
             <span class="error"><?php echo $signUpEmailErr; ?></span>
 
             <label for="password2">Password:</label>
             <input type="password" placeholder="Password" id="signUpPassword" name="signUpPassword" class="form2"
-                   required>
+                   >
             <span class="error"><?php echo $signUpPasswordErr; ?></span>
 
             <label for="confirmPassword">Confirm Password:</label>
             <input type="password" placeholder="Confirm Password" name="signUpConfirmPassword"
-                   id="signUpConfirmPassword" required class="form2">
+                   id="signUpConfirmPassword"  class="form2">
             <span class="error"><?php echo $signUpConfirmPasswordErr; ?></span>
 
             <label for="address">Address:</label>
@@ -304,4 +307,5 @@ function test_input($data)
 </div>
 
 </body>
+<script src="assets/checkout.js"></script>
 </html>
